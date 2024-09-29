@@ -1,0 +1,14 @@
+#ignore env file
+.env
+
+.DS_Store
+.vscode/
+
+__pycache__/
+
+.idea/
+
+.patch
+
+.sql
+.mwb
