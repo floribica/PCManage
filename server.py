@@ -16,6 +16,12 @@ from application.controllers.it import (
     dashboard,
     change_password
 )
+from application.controllers.it.inventory import (
+    computers,
+    monitors,
+    headsets,
+    others
+)
 
 
 load_dotenv()

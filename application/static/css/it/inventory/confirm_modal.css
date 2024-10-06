@@ -1,0 +1,60 @@
+/* Basic styling for modal */
+.card {
+    display: none; /* Hide modal by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  
+  .card-content {
+    text-align: center;
+  }
+  
+  .card-heading {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .card-description {
+    margin: 20px 0;
+  }
+  
+  .card-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .card-button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .card-button.primary {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .card-button.secondary {
+    background-color: #d3d3d3;
+  }
+  
+  .exit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .exit-button svg {
+    fill: #f44336;
+  }
+  

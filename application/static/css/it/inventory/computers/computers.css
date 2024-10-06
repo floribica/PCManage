@@ -1,0 +1,10 @@
+/* Make sure submenus are hidden by default */
+.nav-second-level {
+    display: none;
+  }
+  
+  /* When the parent 'li' has 'open' class, display the submenu */
+  li.open > .nav-second-level {
+    display: block;
+  }
+  
