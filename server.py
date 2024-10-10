@@ -14,13 +14,19 @@ from application.controllers.admin import (
 )
 from application.controllers.it import (
     dashboard,
-    change_password
+    change_password,
+    trace_requests,
+    hr_requests
 )
 from application.controllers.it.inventory import (
     computers,
     monitors,
     headsets,
     others
+)
+from application.controllers.it.del_headsets import (
+    headsets,
+    add_headset,
 )
 
 

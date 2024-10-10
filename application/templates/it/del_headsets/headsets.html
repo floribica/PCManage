@@ -99,7 +99,7 @@
                 Password</a
               >
             </li>
-            <li class="open">
+            <li>
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
                 <span class="fa arrow"></span
@@ -116,7 +116,7 @@
                   >
                 </li>
                 <li>
-                  <a class="active-menu" href="/it/headsets"
+                  <a href="/it/headsets"
                     ><i class="fa fa-headphones"></i>Headsets</a
                   >
                 </li>
@@ -125,19 +125,21 @@
                 </li>
               </ul>
             </li>
-            <li>
+            <li class="open">
               <a href="#"
                 ><i class="fa fa-headphones"></i>Delivero Headsets
                 <span class="fa arrow"></span
               ></a>
               <ul class="nav nav-second-level">
                 <li>
-                  <a href="/it/del/headsets"
+                  <a class="active-menu" href="/it/del/headsets"
                     ><i class="fa fa-headphones"></i>Headsets</a
                   >
                 </li>
                 <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
+                  <a href="/it/del/add/headsets"
+                    ><i class="fa fa-plus"></i>Add Headset</a
+                  >
                 </li>
               </ul>
             </li>
@@ -250,38 +252,34 @@
                     >
                       <thead>
                         <tr>
-                          <th>Headset ID</th>
-                          <th>Adapter Model</th>
-                          <th>Adapter Serial Number</th>
-                          <th>Headset Model</th>
                           <th>Headset Serial Number</th>
+                          <th>Operator Name</th>
+                          <th>IT Name</th>
+                          <td>Status</td>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {% for headset in headsets %}
                         <tr class="odd gradeX">
-                          <td>{{headset.headset_id}}</td>
-                          <td>{{headset.adapter_model}}</td>
-                          <td>{{headset.adapter_sn}}</td>
-                          <td>{{headset.headset_model}}</td>
-                          <td>{{headset.headset_sn}}</td>
+                          <td class="">{{headset.headset_sn}}</td>
+                          <td>{{headset.operator}}</td>
+                          <td>{{headset.it_name}}</td>
+                          <td class="center">
+                            {% if headset.statusi == 1 %}
+                            <span class="label label-success">Returned</span>
+                            {% else %}
+                            <span class="label label-danger">Not Returned</span>
+                            {% endif %}
+                          </td>
                           <td>
+                            {% if headset.statusi == 0 %}
                             <a
-                              href="/it/headsets/edit/{{headset.headset_id}}"
-                              class="btn btn-primary"
-                              ><i class="fa fa-pencil" aria-hidden="true"></i
+                              href="/it/del_headsets/return/{{headset.headset_sn}}"
+                              class="btn btn-success"
+                              ><i class="fa fa-check" aria-hidden="true"></i
                             ></a>
-                            <a
-                              href="javascript:void(0);"
-                              class="btn btn-danger"
-                              onclick="openDeleteModal('{{headset.headset_id }}')"
-                            >
-                              <i
-                                class="fa fa-times-circle"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
+                            {% endif %}
                           </td>
                         </tr>
 
@@ -337,7 +335,7 @@
     <!-- DATA TABLE SCRIPTS -->
     <script src="../../../static/assets/js/table/dataTables/jquery.dataTables.js"></script>
     <script src="../../../static/assets/js/table/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../../../static/js/it/inventory/headset_modal.js"></script>
+    <script src="../../../static/js/it/del_headset/headset_modal.js"></script>
     <script>
       $(document).ready(function () {
         $("#dataTables-example").dataTable();

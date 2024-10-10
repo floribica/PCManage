@@ -20,6 +20,11 @@ def inventory_headset():
 
 @app.route("/it/headsets/edit/<int:headset_id>", methods=["GET", "POST"])
 def inventory_headset_edit(headset_id):
+    if "user" not in session:
+        return redirect("/login")
+    if not session["user"]["role"] == "it":
+        return redirect("/login")
+    
     if request.method == "POST":
         headset_data = {
             "headset_id": headset_id,
@@ -32,10 +37,6 @@ def inventory_headset_edit(headset_id):
             return redirect(f"/it/headsets/edit/{headset_id}")
         Headset.update_headset(headset_data)
         return redirect("/it/headsets")
-    if "user" not in session:
-        return redirect("/login")
-    if not session["user"]["role"] == "it":
-        return redirect("/login")
     
     headset = Headset.get_headset_by_id({"headset_id": headset_id})
     if not headset:

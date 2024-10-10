@@ -20,6 +20,11 @@ def inventory_monitors():
 
 @app.route("/it/monitors/edit/<int:monitor_id>", methods=["GET", "POST"])
 def inventory_monitor_edit(monitor_id):
+    if "user" not in session:
+        return redirect("/login")
+    if not session["user"]["role"] == "it":
+        return redirect("/login")
+    
     if request.method == "POST":
         monitor_data = {
             "monitor_id": monitor_id,
@@ -31,10 +36,6 @@ def inventory_monitor_edit(monitor_id):
             return redirect(f"/it/monitors/edit/{monitor_id}")
         Monitor.update_monitor(monitor_data)
         return redirect("/it/monitors")
-    if "user" not in session:
-        return redirect("/login")
-    if not session["user"]["role"] == "it":
-        return redirect("/login")
     
     monitor = Monitor.get_monitor_by_id({"monitor_id": monitor_id})
     if not monitor:

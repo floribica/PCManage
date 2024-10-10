@@ -57,7 +57,7 @@ class Headset:
                 headset_sn = %(headset_sn)s
             WHERE headset_id = %(headset_id)s;
         """
-        connectToMySQL(cls.db_name).query_db(query, data)
+        return connectToMySQL(cls.db_name).query_db(query, data)
     
     
     @classmethod    
@@ -66,7 +66,7 @@ class Headset:
             DELETE FROM headsets
             WHERE headset_id = %(headset_id)s;
         """
-        connectToMySQL(cls.db_name).query_db(query, data)
+        return connectToMySQL(cls.db_name).query_db(query, data)
     
     
     @staticmethod

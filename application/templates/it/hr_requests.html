@@ -26,10 +26,8 @@
       href="../../../static/css/it/inventory/computers/dataTables.bootstrap.css"
       rel="stylesheet"
     />
-    <link
-      href="../../../static/css/it/inventory/confirm_modal.css"
-      rel="stylesheet"
-    />
+    <link href="../../static/css/it/cancel_modal.css" rel="stylesheet" />
+
     <!-- GOOGLE FONTS-->
     <link
       href="http://fonts.googleapis.com/css?family=Open+Sans"
@@ -99,7 +97,7 @@
                 Password</a
               >
             </li>
-            <li class="open">
+            <li>
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
                 <span class="fa arrow"></span
@@ -116,7 +114,7 @@
                   >
                 </li>
                 <li>
-                  <a class="active-menu" href="/it/headsets"
+                  <a href="/it/headsets"
                     ><i class="fa fa-headphones"></i>Headsets</a
                   >
                 </li>
@@ -137,7 +135,9 @@
                   >
                 </li>
                 <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
+                  <a href="/it/del/add/headsets"
+                    ><i class="fa fa-plus"></i>Add Headset</a
+                  >
                 </li>
               </ul>
             </li>
@@ -147,7 +147,7 @@
               </a>
             </li>
             <li>
-              <a href="/it/hrs/request"
+              <a class="active-menu" href="/it/hrs/request"
                 ><i class="fa fa-bullhorn"></i>HR Requests
               </a>
             </li>
@@ -217,15 +217,13 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">DASHBOARD</h1>
+              <h1 class="page-head-line">Computers</h1>
               <h1 class="page-subhead-line">
-                This is dummy text , you can replace it with your original text.
+                Here you can view, edit and delete computers.
               </h1>
             </div>
           </div>
-          <!-- /. ROW  -->
           <hr />
-          <!-- load html -->
           <div class="loader" id="loader" style="display: none">
             <div class="loader-inner">
               <div class="loader-square"></div>
@@ -240,7 +238,6 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <!-- Advanced Tables -->
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -250,70 +247,103 @@
                     >
                       <thead>
                         <tr>
-                          <th>Headset ID</th>
-                          <th>Adapter Model</th>
-                          <th>Adapter Serial Number</th>
-                          <th>Headset Model</th>
-                          <th>Headset Serial Number</th>
+                          <th>ID</th>
+                          <th>Request By</th>
+                          <th>Operator Name</th>
+                          <th>Operator Email</th>
+                          <th>Status</th>
+                          <th>Request ID</th>
+                          <th>Request Date</th>
+                          <th>Authorization Date</th>
+                          <th>Fushata</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for headset in headsets %}
+                        {% for request in requests %}
                         <tr class="odd gradeX">
-                          <td>{{headset.headset_id}}</td>
-                          <td>{{headset.adapter_model}}</td>
-                          <td>{{headset.adapter_sn}}</td>
-                          <td>{{headset.headset_model}}</td>
-                          <td>{{headset.headset_sn}}</td>
+                          <td>{{request.hr_id}}</td>
+                          <td>{{request.hr_name}}</td>
+                          <td>{{request.first_name}} {{request.first_name}}</td>
+                          <td>{{request.email}}</td>
+                          <td class="center">
+                            {% if request.statusi == 'request' %}
+                            <span class="label label-warning">Request</span>
+                            {% elif request.statusi == 'approved' %}
+                            <span class="label label-success">Approved</span>
+                            {% elif request.statusi == 'ready' %}
+                            <span class="label label-info">Ready</span>
+                            {% elif request.statusi == 'submitted' %}
+                            <span class="label label-primary">Submitted</span>
+                            {% elif request.statusi == 'returned' %}
+                            <span class="label label-danger">Returned</span>
+                            {% elif request.statusi == 'cancel' %}
+                            <span class="label label-danger">Canceled</span>
+                            {% else%}
+                            <span class="label label-danger">ERROR</span>
+                            {% endif %}
+                          </td>
+                          <td>{{request.request_id}}</td>
+                          <td>{{ request.created_at.strftime('%Y-%m-%d') }}</td>
+                          {% if not request.authorization_date %}
+                          <td>Not Authorizate</td>
+                          {% else %}
+                          <td>
+                            {{request.authorization_date.strftime('%Y-%m-%d')}}
+                          </td>
+                          {% endif %}
+                          <td>{{request.fushata}}</td>
                           <td>
                             <a
-                              href="/it/headsets/edit/{{headset.headset_id}}"
-                              class="btn btn-primary"
-                              ><i class="fa fa-pencil" aria-hidden="true"></i
+                              href="/it/hrs/approve/{{request.hr_id}}"
+                              class="btn btn-success"
+                              ><i class="fa fa-check" aria-hidden="true"></i
                             ></a>
                             <a
-                              href="javascript:void(0);"
+                              href="#"
                               class="btn btn-danger"
-                              onclick="openDeleteModal('{{headset.headset_id }}')"
+                              onclick="openCancelModal('{{request.hr_id}}')"
                             >
-                              <i
-                                class="fa fa-times-circle"
-                                aria-hidden="true"
-                              ></i>
+                              <i class="fa fa-times" aria-hidden="true"></i>
                             </a>
                           </td>
                         </tr>
-
                         {% endfor %}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-              <!--End Advanced Tables -->
             </div>
           </div>
-          <!-- /. ROW  -->
-          <div class="card" id="deleteModal" data-serial-nr="">
+          <!-- Modal Overlay -->
+          <div class="modal-overlay"></div>
+
+          <!-- Modal -->
+          <div class="card" id="cancelModal" data-serial-nr="">
             <div class="card-content">
-              <p class="card-heading">Delete Headset?</p>
+              <p class="card-heading">Cancel Request?</p>
               <p class="card-description">
-                Are you sure you want to delete this headset?
+                Please provide a reason for cancellation:
               </p>
+              <input
+                type="text"
+                id="cancelReason"
+                placeholder="Enter reason here"
+              />
             </div>
             <div class="card-button-wrapper">
               <button
                 class="card-button secondary"
-                onclick="closeDeleteModal()"
+                onclick="closeCancelModal()"
               >
                 Cancel
               </button>
-              <button class="card-button primary" id="confirmDeleteButton">
-                Delete
+              <button class="card-button primary" id="confirmCancelButton">
+                Submit
               </button>
             </div>
-            <button class="exit-button" onclick="closeDeleteModal()">
+            <button class="exit-button" onclick="closeCancelModal()">
               <svg height="20px" viewBox="0 0 384 512">
                 <path
                   d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
@@ -323,21 +353,15 @@
           </div>
         </div>
       </div>
-      <!-- /. PAGE INNER  -->
     </div>
-    <!-- /. PAGE WRAPPER  -->
-    <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
+
+    <!-- SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
     <script src="../../../static/assets/js/table/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
     <script src="../../../static/assets/js/table/dataTables/jquery.dataTables.js"></script>
     <script src="../../../static/assets/js/table/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../../../static/js/it/inventory/headset_modal.js"></script>
+    <script src="../../static/js/it/cancel_request.js"></script>
     <script>
       $(document).ready(function () {
         $("#dataTables-example").dataTable();

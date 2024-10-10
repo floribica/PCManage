@@ -20,6 +20,10 @@ def inventory_other():
 
 @app.route("/it/others/edit/<int:other_id>", methods=["GET", "POST"])
 def inventory_other_edit(other_id):
+    if "user" not in session:
+        return redirect("/login")
+    if not session["user"]["role"] == "it":
+        return redirect("/login")
     if request.method == "POST":
         other_data = {
             "other_id": other_id,
@@ -33,10 +37,6 @@ def inventory_other_edit(other_id):
             return redirect(f"/it/others/edit/{other_id}")
         Other.update_other(other_data)
         return redirect("/it/others")
-    if "user" not in session:
-        return redirect("/login")
-    if not session["user"]["role"] == "it":
-        return redirect("/login")
     
     other = Other.get_other_by_id({"other_id": other_id})
     if not other:

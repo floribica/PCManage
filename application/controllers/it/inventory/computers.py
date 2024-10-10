@@ -20,6 +20,11 @@ def inventory_pc():
 
 @app.route("/it/computers/edit/<string:serial_nr>", methods=["GET", "POST"])
 def inventory_pc_edit(serial_nr):
+    if "user" not in session:
+        return redirect("/login")
+    if not session["user"]["role"] == "it":
+        return redirect("/login")
+
     if request.method == "POST":
         computer_data = {
             "serial_nr": serial_nr,
@@ -34,10 +39,6 @@ def inventory_pc_edit(serial_nr):
             return redirect(f"/it/computers/edit/{serial_nr}")
         Computer.update_computer(computer_data)
         return redirect("/it/computers")
-    if "user" not in session:
-        return redirect("/login")
-    if not session["user"]["role"] == "it":
-        return redirect("/login")
     
     computer = Computer.get_computer_by_serial_nr({"serial_nr": serial_nr})
     if not computer:
