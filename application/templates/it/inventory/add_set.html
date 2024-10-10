@@ -26,6 +26,10 @@
       href="../../../../static/css/it/inventory/computers/dataTables.bootstrap.css"
       rel="stylesheet"
     />
+    <link
+      href="../../../static/css/it/inventory/add_set.css"
+      rel="stylesheet"
+    />
     <!-- GOOGLE FONTS-->
     <link
       href="http://fonts.googleapis.com/css?family=Open+Sans"
@@ -92,9 +96,7 @@
             </li>
 
             <li>
-              <a href="/"
-                ><i class="fa fa-dashboard"></i>Dashboard</a
-              >
+              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
             <li class="open">
               <a href="#"
@@ -103,10 +105,14 @@
               ></a>
               <ul class="nav nav-second-level">
                 <li>
-                  <a href="/it/computers"><i class="fa fa-laptop"></i>Computers</a>
+                  <a href="/it/computers"
+                    ><i class="fa fa-laptop"></i>Computers</a
+                  >
                 </li>
                 <li>
-                  <a class="active-menu" href="/it/monitors"><i class="fa fa-desktop"></i>Monitors</a>
+                  <a href="/it/monitors"
+                    ><i class="fa fa-desktop"></i>Monitors</a
+                  >
                 </li>
                 <li>
                   <a href="/it/headsets"
@@ -117,7 +123,7 @@
                   <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
                 </li>
                 <li>
-                  <a href="/it/search/set"
+                  <a class="active-menu" href="/it/search/set"
                     ><i class="fa fa-plus" aria-hidden="true"></i>Add Set</a
                   >
                 </li>
@@ -135,7 +141,9 @@
                   >
                 </li>
                 <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
+                  <a href="/it/del/add/headsets"
+                    ><i class="fa fa-plus"></i>Add Headset</a
+                  >
                 </li>
               </ul>
             </li>
@@ -151,7 +159,8 @@
             </li>
             <li>
               <a href="/it/change_password"
-                ><i class="fa fa-pencil" aria-hidden="true"></i>Change Password</a
+                ><i class="fa fa-pencil" aria-hidden="true"></i>Change
+                Password</a
               >
             </li>
             <li>
@@ -165,9 +174,9 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">DASHBOARD</h1>
+              <h1 class="page-head-line">Add Set</h1>
               <h1 class="page-subhead-line">
-                This is dummy text , you can replace it with your original text.
+                Add a new set of computer, monitor, headset and headset adapter.
               </h1>
             </div>
           </div>
@@ -189,33 +198,185 @@
           <div class="row">
             <div class="col-md-12">
               <div class="center-form">
-                  <form
-                  class="form"
-                  action="/it/monitors/edit/{{monitor.monitor_id}}"
-                  method="post"
-                  >
-                  {% with messages = get_flashed_messages(category_filter=["monitor_edit"])
-                    %} {% if messages %} {% for message in messages %}
-                    <p class="text-danger text-center">{{ message }}</p>
-                    {% endfor %} {% endif %} {% endwith %}
+                <form class="form" action="/it/add/set" method="post">
+                  {% with messages =
+                  get_flashed_messages(category_filter=["add_set"]) %} {% if
+                  messages %} {% for message in messages %}
+                  <p class="text-danger text-center">{{ message }}</p>
+                  {% endfor %} {% endif %} {% endwith %}
+
                   <span class="input-span">
-                    <label for="monitor_id" class="label">Monitor ID</label>
-                    <input type="text" name="monitor_id" id="monitor_id" value="{{monitor.monitor_id}}" readonly
-                  /></span>
+                    <label for="serial_nr" class="label">Serial Number</label>
+                    <input
+                      type="text"
+                      name="serial_nr"
+                      id="serial_nr"
+                      value="{{computer.serial_nr}}"
+                    />
+                  </span>
+
                   <span class="input-span">
-                    <label for="model" class="label">Monitor Model</label>
-                    <input type="text" name="model" id="model" value="{{monitor.model}}"
-                  /></span>
+                    <label for="pc_model" class="label">Computer Model</label>
+                    <input
+                      type="text"
+                      name="pc_model"
+                      id="pc_model"
+                      value="{{computer.model}}"
+                    />
+                  </span>
+
                   <span class="input-span">
-                    <label for="model_sn" class="label">Monitor Serial Number</label>
-                    <input type="text" name="model_sn" id="model_sn" value="{{monitor.model_sn}}"
-                  /></span>
+                    <label for="cpu" class="label">CPU Model</label>
+                    <input
+                      type="text"
+                      name="cpu"
+                      id="cpu"
+                      value="{{computer.cpu}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="ram" class="label">RAM Size</label>
+                    <input
+                      type="text"
+                      name="ram"
+                      id="ram"
+                      value="{{computer.ram}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="storage_type" class="label">Storage Type</label>
+                    <input
+                      type="text"
+                      name="storage_type"
+                      id="storage_type"
+                      value="{{computer.storage_type}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="storage_value" class="label"
+                      >Storage Value</label
+                    >
+                    <input
+                      type="text"
+                      name="storage_value"
+                      id="storage_value"
+                      value="{{computer.storage_value}}"
+                    />
+                  </span>
+
+                  <!-- Monitor fields -->
+                  <span class="input-span">
+                    <label for="monitor_model" class="label">Monitor Model</label>
+                    <input
+                      type="text"
+                      name="monitor_model"
+                      id="monitor_model"
+                      value="{{monitor.model}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="model_sn" class="label"
+                      >Monitor Serial Number</label
+                    >
+                    <input
+                      type="text"
+                      name="model_sn"
+                      id="model_sn"
+                      value="{{monitor.model_sn}}"
+                    />
+                  </span>
+
                   <span class="input-span">
                     <label for="size" class="label">Monitor Size</label>
-                    <input type="text" name="size" id="size" value="{{monitor.size}}"
-                  /></span>
-                  <br>
-                  <input class="submit" type="submit" value="Edit" />
+                    <input
+                      type="text"
+                      name="size"
+                      id="size"
+                      value="{{monitor.size}}"
+                    />
+                  </span>
+
+                  <!-- Headset fields -->
+                  <span class="input-span">
+                    <label for="adapter_model" class="label"
+                      >Adapter Model</label
+                    >
+                    <input
+                      type="text"
+                      name="adapter_model"
+                      id="adapter_model"
+                      value="{{headset.adapter_model}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="adapter_sn" class="label"
+                      >Adapter Serial Number</label
+                    >
+                    <input
+                      type="text"
+                      name="adapter_sn"
+                      id="adapter_sn"
+                      value="{{headset.adapter_sn}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="headset_model" class="label"
+                      >Headset Model</label
+                    >
+                    <input
+                      type="text"
+                      name="headset_model"
+                      id="headset_model"
+                      value="{{headset.headset_model}}"
+                    />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="headset_sn" class="label"
+                      >Headset Serial Number</label
+                    >
+                    <input
+                      type="text"
+                      name="headset_sn"
+                      id="headset_sn"
+                      value="{{headset.headset_sn}}"
+                    />
+                  </span>
+
+                  <!-- Additional fields -->
+                  <span class="input-span">
+                    <label for="mouse" class="label">Mouse</label>
+                    <input type="text" name="mouse" id="mouse" />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="keyboard" class="label">Keyboard</label>
+                    <input type="text" name="keyboard" id="keyboard" />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="dp_vga" class="label">DP or VGA</label>
+                    <input type="text" name="dp_vga" id="dp_vga" />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="ac" class="label">AC Adapter</label>
+                    <input type="text" name="ac" id="ac" />
+                  </span>
+
+                  <span class="input-span">
+                    <label for="lan" class="label">Lan</label>
+                    <input type="text" name="lan" id="lan" />
+                  </span>
+
+                  <br />
+                  <input class="submit" type="submit" value="Save" />
                 </form>
               </div>
             </div>

@@ -24,12 +24,10 @@ class Hrs:
         query = """
         SELECT
             hrs.*,
-            request.request_by AS hr_name,
-            request.authorization_date,
-            request.fushata
+            trace_date.authorization_date
         FROM hrs
-        JOIN request
-        ON hrs.request_id = request.request_id
+        JOIN trace_date
+        ON hrs.trace_date_id = trace_date.trace_date_id
         WHERE statusi = 'request';
         """
         results = connectToMySQL(cls.db_name).query_db(query)
@@ -45,12 +43,10 @@ class Hrs:
         query = """
         SELECT
             hrs.*,
-            request.request_by AS hr_name,
-            request.authorization_date,
-            request.fushata
+            trace_date.authorization_date
         FROM hrs
-        JOIN request
-        ON hrs.request_id = request.request_id
+        JOIN trace_date
+        ON hrs.trace_date_id = trace_date.trace_date_id
         WHERE statusi != 'request';
         """
         results = connectToMySQL(cls.db_name).query_db(query)
@@ -59,6 +55,20 @@ class Hrs:
             for request in results:
                 requests.append(request)
         return requests
+    
+    
+    @classmethod
+    def get_trace_date_id(cls, data):
+        query = """
+        SELECT
+            trace_date_id
+        FROM hrs
+        WHERE hr_id = %(hr_id)s;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        if results:
+            return results[0]
+        return None
     
     
     @classmethod

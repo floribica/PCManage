@@ -1,7 +1,9 @@
+from datetime import datetime
 from flask import render_template, redirect, session
 
 from application import app
 from application.models.hrs import Hrs
+from application.models.trace_date import Trace
 
 
 @app.route('/it/hrs/trace')
@@ -26,7 +28,17 @@ def it_application_hrs_ready(hr_id):
     if not session["user"]["role"] == "it":
         return redirect("/login")
     
-    Hrs.ready_request({"hr_id": hr_id})
+    data = {
+        "hr_id": hr_id,
+        "ready_date": datetime.now()
+    }
+    trace_date_id = Hrs.get_trace_date_id(data)
+    if not trace_date_id:
+        return redirect("/it/hrs/request")
+    data["trace_date_id"] = trace_date_id["trace_date_id"]
+    
+    Trace.ready_request(data)
+    Hrs.ready_request(data)
     
     return redirect("/it/hrs/trace")
 
@@ -38,7 +50,17 @@ def it_application_hrs_submitted(hr_id):
     if not session["user"]["role"] == "it":
         return redirect("/login")
     
-    Hrs.submitted_request({"hr_id": hr_id})
+    data = {
+        "hr_id": hr_id,
+        "submitted_date": datetime.now()
+    }
+    trace_date_id = Hrs.get_trace_date_id(data)
+    if not trace_date_id:
+        return redirect("/it/hrs/request")
+    data["trace_date_id"] = trace_date_id["trace_date_id"]
+    
+    Trace.submitted_request(data)
+    Hrs.submitted_request(data)
     
     return redirect("/it/hrs/trace")
 
@@ -50,6 +72,16 @@ def it_application_hrs_returned(hr_id):
     if not session["user"]["role"] == "it":
         return redirect("/login")
     
-    Hrs.returned_request({"hr_id": hr_id})
+    data = {
+        "hr_id": hr_id,
+        "returned_date": datetime.now()
+    }
+    trace_date_id = Hrs.get_trace_date_id(data)
+    if not trace_date_id:
+        return redirect("/it/hrs/request")
+    data["trace_date_id"] = trace_date_id["trace_date_id"]
+    
+    Trace.returned_request(data)
+    Hrs.returned_request(data)
     
     return redirect("/it/hrs/trace")

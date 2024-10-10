@@ -93,12 +93,6 @@
             <li>
               <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
-            <li>
-              <a href="/it/change_password"
-                ><i class="fa fa-pencil" aria-hidden="true"></i>Change
-                Password</a
-              >
-            </li>
             <li class="open">
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
@@ -123,6 +117,11 @@
                 <li>
                   <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
                 </li>
+                <li>
+                  <a href="/it/search/set"
+                    ><i class="fa fa-plus" aria-hidden="true"></i>Add Set</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -137,7 +136,9 @@
                   >
                 </li>
                 <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
+                  <a href="/it/del/add/headsets"
+                    ><i class="fa fa-plus"></i>Add Headset</a
+                  >
                 </li>
               </ul>
             </li>
@@ -152,62 +153,13 @@
               </a>
             </li>
             <li>
-              <a href="#"
-                ><i class="fa fa-bicycle"></i>Forms
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="form.html"><i class="fa fa-desktop"></i>Basic </a>
-                </li>
-                <li>
-                  <a href="form-advance.html"
-                    ><i class="fa fa-code"></i>Advance</a
-                  >
-                </li>
-              </ul>
+              <a href="/it/change_password"
+                ><i class="fa fa-pencil" aria-hidden="true"></i>Change
+                Password</a
+              >
             </li>
             <li>
-              <a href="gallery.html"><i class="fa fa-anchor"></i>Gallery</a>
-            </li>
-            <li>
-              <a href="error.html"><i class="fa fa-bug"></i>Error Page</a>
-            </li>
-            <li>
-              <a href="login.html"><i class="fa fa-sign-in"></i>Login Page</a>
-            </li>
-            <li>
-              <a href="#"
-                ><i class="fa fa-sitemap"></i>Multilevel Link
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="#"><i class="fa fa-bicycle"></i>Second Level Link</a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-flask"></i>Second Level Link</a>
-                </li>
-                <li>
-                  <a href="#"
-                    >Second Level Link<span class="fa arrow"></span
-                  ></a>
-                  <ul class="nav nav-third-level">
-                    <li>
-                      <a href="#"><i class="fa fa-plus"></i>Third Level Link</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="fa fa-comments-o"></i>Third Level Link</a
-                      >
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-
-            <li>
-              <a href="blank.html"><i class="fa fa-square-o"></i>Blank Page</a>
+              <a href="/logout"><i class="fa fa-sign-in"></i>Logout</a>
             </li>
           </ul>
         </div>
@@ -305,7 +257,9 @@
               >
                 Cancel
               </button>
-              <button class="card-button primary" id="confirmDeleteButton">Delete</button>
+              <button class="card-button primary" id="confirmDeleteButton">
+                Delete
+              </button>
             </div>
             <button class="exit-button" onclick="closeDeleteModal()">
               <svg height="20px" viewBox="0 0 384 512">
@@ -318,6 +272,20 @@
         </div>
       </div>
     </div>
+    <div id="footer-sec">
+      &copy; 2024 Konecta | Design By :
+      <a href="" target="_blank">Flori Bica</a>
+    </div>
+    <!-- /. FOOTER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="../../static/assets/js/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="../../static/assets/js/bootstrap.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="../../static/assets/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="../../static/assets/js/custom.js"></script>
 
     <!-- SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery-1.10.2.js"></script>

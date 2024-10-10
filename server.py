@@ -22,7 +22,8 @@ from application.controllers.it.inventory import (
     computers,
     monitors,
     headsets,
-    others
+    others,
+    add_set
 )
 from application.controllers.it.del_headsets import (
     headsets,

@@ -32,6 +32,20 @@ class Monitor:
     
     
     @classmethod
+    def get_monitor_by_serial_nr(cls, data):
+        query = """
+            SELECT
+                *
+            FROM monitors
+            WHERE model_sn = %(model_sn)s;
+        """
+        result = connectToMySQL(cls.db_name).query_db(query, data)
+        if result:
+            return result[0]
+        return None
+    
+    
+    @classmethod
     def update_monitor(cls, data):
         query = """
             UPDATE monitors

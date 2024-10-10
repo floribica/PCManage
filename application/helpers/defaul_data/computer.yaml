@@ -1,0 +1,12 @@
+name: Computer
+description: Computer
+
+serial_nr: ""
+model: ""
+cpu: ""
+ram: ""
+storage_type: ""
+storage_value: ""
+
+version: 1.0.0
+

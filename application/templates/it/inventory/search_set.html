@@ -92,9 +92,7 @@
             </li>
 
             <li>
-              <a href="/"
-                ><i class="fa fa-dashboard"></i>Dashboard</a
-              >
+              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
             <li class="open">
               <a href="#"
@@ -103,10 +101,14 @@
               ></a>
               <ul class="nav nav-second-level">
                 <li>
-                  <a href="/it/computers"><i class="fa fa-laptop"></i>Computers</a>
+                  <a href="/it/computers"
+                    ><i class="fa fa-laptop"></i>Computers</a
+                  >
                 </li>
                 <li>
-                  <a class="active-menu" href="/it/monitors"><i class="fa fa-desktop"></i>Monitors</a>
+                  <a href="/it/monitors"
+                    ><i class="fa fa-desktop"></i>Monitors</a
+                  >
                 </li>
                 <li>
                   <a href="/it/headsets"
@@ -117,7 +119,7 @@
                   <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
                 </li>
                 <li>
-                  <a href="/it/search/set"
+                  <a class="active-menu" href="/it/search/set"
                     ><i class="fa fa-plus" aria-hidden="true"></i>Add Set</a
                   >
                 </li>
@@ -135,7 +137,9 @@
                   >
                 </li>
                 <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
+                  <a href="/it/del/add/headsets"
+                    ><i class="fa fa-plus"></i>Add Headset</a
+                  >
                 </li>
               </ul>
             </li>
@@ -151,7 +155,8 @@
             </li>
             <li>
               <a href="/it/change_password"
-                ><i class="fa fa-pencil" aria-hidden="true"></i>Change Password</a
+                ><i class="fa fa-pencil" aria-hidden="true"></i>Change
+                Password</a
               >
             </li>
             <li>
@@ -165,9 +170,9 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">DASHBOARD</h1>
+              <h1 class="page-head-line">Search Parts</h1>
               <h1 class="page-subhead-line">
-                This is dummy text , you can replace it with your original text.
+                Please enter the serial numbers of the parts you want to search if they are in the inventory.
               </h1>
             </div>
           </div>
@@ -191,31 +196,31 @@
               <div class="center-form">
                   <form
                   class="form"
-                  action="/it/monitors/edit/{{monitor.monitor_id}}"
+                  action="/it/search/set"
                   method="post"
                   >
-                  {% with messages = get_flashed_messages(category_filter=["monitor_edit"])
+                  {% with messages = get_flashed_messages(category_filter=["search_set"])
                     %} {% if messages %} {% for message in messages %}
                     <p class="text-danger text-center">{{ message }}</p>
                     {% endfor %} {% endif %} {% endwith %}
                   <span class="input-span">
-                    <label for="monitor_id" class="label">Monitor ID</label>
-                    <input type="text" name="monitor_id" id="monitor_id" value="{{monitor.monitor_id}}" readonly
+                    <label for="computer_sn" class="label">Computer Serial Number</label>
+                    <input type="text" name="computer_sn" id="computer_sn"
                   /></span>
                   <span class="input-span">
-                    <label for="model" class="label">Monitor Model</label>
-                    <input type="text" name="model" id="model" value="{{monitor.model}}"
+                    <label for="monitor_sn" class="label">Monitor Serial Number</label>
+                    <input type="text" name="monitor_sn" id="monitor_sn"
                   /></span>
                   <span class="input-span">
-                    <label for="model_sn" class="label">Monitor Serial Number</label>
-                    <input type="text" name="model_sn" id="model_sn" value="{{monitor.model_sn}}"
+                    <label for="headset_sn" class="label">Headset Serial Number</label>
+                    <input type="text" name="headset_sn" id="headset_sn"
                   /></span>
                   <span class="input-span">
-                    <label for="size" class="label">Monitor Size</label>
-                    <input type="text" name="size" id="size" value="{{monitor.size}}"
+                    <label for="adapter_sn" class="label">Headset Adapter Serial Number</label>
+                    <input type="text" name="adapter_sn" id="adapter_sn"
                   /></span>
                   <br>
-                  <input class="submit" type="submit" value="Edit" />
+                  <input class="submit" type="submit" value="Search" />
                 </form>
               </div>
             </div>

@@ -33,6 +33,21 @@ class Headset:
     
     
     @classmethod
+    def get_headset_by_serial_nr(cls, data):
+        query = """
+            SELECT
+                *
+            FROM headsets
+            WHERE adapter_sn = %(adapter_sn)s
+            OR headset_sn = %(headset_sn)s;
+        """
+        result = connectToMySQL(cls.db_name).query_db(query, data)
+        if result:
+            return result[0]
+        return None
+    
+    
+    @classmethod
     def get_headset_by_id(cls, data):
         query = """
             SELECT

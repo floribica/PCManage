@@ -1,0 +1,9 @@
+name: Headset
+description: Headset
+
+adapter_model: ""
+adapter_sn: ""
+headset_model: ""
+headset_sn: ""
+
+version: 1.0.0
