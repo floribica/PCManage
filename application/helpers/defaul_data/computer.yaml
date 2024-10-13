@@ -2,7 +2,7 @@ name: Computer
 description: Computer
 
 serial_nr: ""
-model: ""
+model: "--"
 cpu: ""
 ram: ""
 storage_type: ""

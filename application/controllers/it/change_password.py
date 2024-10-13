@@ -5,7 +5,6 @@ from application import app
 from application.helpers.password import generate_password
 from application.models.user import User
 
-bcrypt = Bcrypt(app)
 
 @app.route('/it/change_password', methods=['GET', 'POST'])
 def it_change_password():
@@ -17,15 +16,14 @@ def it_change_password():
             'confirm_password': request.form['confirm_password'],
         }
 
-        if not change_data['username'] == session['user']['username']:
+        if change_data['username'] != session['user']['username']:
             return redirect('/it/change_password')
 
         if not User.validate_user_reset(change_data):
             return redirect('/it/change_password')
 
-        # Generate the hashed password and store it as a string (not bytes)
-        password = generate_password()
-        change_data["password"] = bcrypt.generate_password_hash(password).decode('utf-8')
+
+        change_data["password"] = Bcrypt().generate_password_hash(change_data["password"])
         
         # Call method to update the user's password in the database
         User.user_reser_password(change_data)

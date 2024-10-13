@@ -18,6 +18,17 @@ class Headset:
     
     
     @classmethod
+    def add_headset(cls, data):
+        query = """
+            INSERT INTO headsets
+                (adapter_model, adapter_sn, headset_model, headset_sn)
+            VALUES
+                (%(adapter_model)s, %(adapter_sn)s, %(headset_model)s, %(headset_sn)s);
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    
+    @classmethod
     def get_all_headsets(cls):
         query = """
             SELECT
@@ -82,6 +93,21 @@ class Headset:
             WHERE headset_id = %(headset_id)s;
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    
+    @classmethod
+    def get_headset_id(cls, data):
+        query = """
+            SELECT
+                headset_id
+            FROM headsets
+            ORDER BY created_at DESC 
+            LIMIT 1; 
+        """
+        result = connectToMySQL(cls.db_name).query_db(query, data)
+        if result:
+            return result[0]
+        return None
     
     
     @staticmethod

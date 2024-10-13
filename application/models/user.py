@@ -23,6 +23,36 @@ class User:
     
     
     @classmethod
+    def get_all_users(cls):
+        query = """
+            SELECT
+                *
+            FROM users
+            WHERE role != 'admin';
+        """
+        results = connectToMySQL(cls.db_name).query_db(query)
+        users = []
+        if results:
+            for user in results:
+                users.append(user)
+        return users
+    
+    
+    @classmethod
+    def get_user_by_id(cls, data):
+        query = """
+            SELECT
+                *
+            FROM users
+            WHERE user_id = %(user_id)s;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        if results:
+            return results[0]
+        return None
+    
+    
+    @classmethod
     def get_user_by_username(cls, data):
         query = """
             SELECT

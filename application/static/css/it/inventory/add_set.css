@@ -26,12 +26,39 @@ input[type="text"] {
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 14px;
+    background-color: #fff; /* Background color for text input */
 }
 
 input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.custom-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    appearance: none; /* Removes default styling */
+    background-color: #fff; /* Ensure background is white */
+    color: #333; /* Set text color to match the input */
+    outline: none; /* Remove outline */
+}
+
+.custom-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* To add a custom arrow for the select dropdown */
+.custom-select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5" fill="%23333"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
 }
 
 .submit {

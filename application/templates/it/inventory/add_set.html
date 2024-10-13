@@ -98,6 +98,11 @@
             <li>
               <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
+            <li>
+              <a href="/it/users"
+                ><i class="fa fa-user"></i>Users</a
+              >
+            </li>
             <li class="open">
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
@@ -206,6 +211,17 @@
                   {% endfor %} {% endif %} {% endwith %}
 
                   <span class="input-span">
+                    <label for="hr_id" class="label"><h4>Choose Operator</h4></label>
+                    <select name="hr_id" id="hr_id" class="custom-select">
+                      {% for hr in hrs %}
+                      <option value="{{hr.hr_id}}">
+                        {{hr.first_name}} {{hr.last_name}}
+                      </option>
+                      {% endfor %}
+                    </select>
+                  </span>
+
+                  <span class="input-span">
                     <label for="serial_nr" class="label">Serial Number</label>
                     <input
                       type="text"
@@ -269,7 +285,9 @@
 
                   <!-- Monitor fields -->
                   <span class="input-span">
-                    <label for="monitor_model" class="label">Monitor Model</label>
+                    <label for="monitor_model" class="label"
+                      >Monitor Model</label
+                    >
                     <input
                       type="text"
                       name="monitor_model"
@@ -279,14 +297,14 @@
                   </span>
 
                   <span class="input-span">
-                    <label for="model_sn" class="label"
+                    <label for="monitor_sn" class="label"
                       >Monitor Serial Number</label
                     >
                     <input
                       type="text"
-                      name="model_sn"
-                      id="model_sn"
-                      value="{{monitor.model_sn}}"
+                      name="monitor_sn"
+                      id="monitor_sn"
+                      value="{{monitor.monitor_sn}}"
                     />
                   </span>
 

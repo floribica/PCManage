@@ -95,6 +95,11 @@
                 ><i class="fa fa-dashboard"></i>Dashboard</a
               >
             </li>
+            <li>
+              <a href="/it/users"
+                ><i class="fa fa-user"></i>Users</a
+              >
+            </li>
             <li class="open">
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
@@ -197,9 +202,8 @@
                     >
                       <thead>
                         <tr>
-                          <th>Monitor ID</th>
-                          <th>Model</th>
                           <th>Serial Number</th>
+                          <th>Model</th>
                           <th>Size</th>
                           <th>Actions</th>
                         </tr>
@@ -207,20 +211,19 @@
                       <tbody>
                         {% for monitor in monitors %}
                         <tr class="odd gradeX">
-                          <td>{{monitor.monitor_id}}</td>
+                          <td>{{monitor.monitor_sn}}</td>
                           <td>{{monitor.model}}</td>
-                          <td>{{monitor.model_sn}}</td>
                           <td>{{monitor.size}}</td>
                           <td>
                             <a
-                              href="/it/monitors/edit/{{monitor.monitor_id}}"
+                              href="/it/monitors/edit/{{monitor.monitor_sn}}"
                               class="btn btn-primary"
                               ><i class="fa fa-pencil" aria-hidden="true"></i
                             ></a>
                             <a
                               href="javascript:void(0);"
                               class="btn btn-danger"
-                              onclick="openDeleteModal('{{monitor.monitor_id}}')"
+                              onclick="openDeleteModal('{{monitor.monitor_sn}}')"
                             >
                               <i
                                 class="fa fa-times-circle"

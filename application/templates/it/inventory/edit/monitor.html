@@ -96,6 +96,11 @@
                 ><i class="fa fa-dashboard"></i>Dashboard</a
               >
             </li>
+            <li>
+              <a href="/it/users"
+                ><i class="fa fa-user"></i>Users</a
+              >
+            </li>
             <li class="open">
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
@@ -191,24 +196,20 @@
               <div class="center-form">
                   <form
                   class="form"
-                  action="/it/monitors/edit/{{monitor.monitor_id}}"
+                  action="/it/monitors/edit/{{monitor.monitor_sn}}"
                   method="post"
                   >
                   {% with messages = get_flashed_messages(category_filter=["monitor_edit"])
                     %} {% if messages %} {% for message in messages %}
                     <p class="text-danger text-center">{{ message }}</p>
                     {% endfor %} {% endif %} {% endwith %}
-                  <span class="input-span">
-                    <label for="monitor_id" class="label">Monitor ID</label>
-                    <input type="text" name="monitor_id" id="monitor_id" value="{{monitor.monitor_id}}" readonly
-                  /></span>
+                    <span class="input-span">
+                      <label for="monitor_sn" class="label">Monitor Serial Number</label>
+                      <input type="text" name="monitor_sn" id="monitor_sn" value="{{monitor.monitor_sn}}"
+                    /></span>
                   <span class="input-span">
                     <label for="model" class="label">Monitor Model</label>
                     <input type="text" name="model" id="model" value="{{monitor.model}}"
-                  /></span>
-                  <span class="input-span">
-                    <label for="model_sn" class="label">Monitor Serial Number</label>
-                    <input type="text" name="model_sn" id="model_sn" value="{{monitor.model_sn}}"
                   /></span>
                   <span class="input-span">
                     <label for="size" class="label">Monitor Size</label>

@@ -94,6 +94,9 @@
             <li>
               <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
+            <li>
+              <a href="/it/users"><i class="fa fa-user"></i>Users</a>
+            </li>
             <li class="open">
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
@@ -172,7 +175,8 @@
             <div class="col-md-12">
               <h1 class="page-head-line">Search Parts</h1>
               <h1 class="page-subhead-line">
-                Please enter the serial numbers of the parts you want to search if they are in the inventory.
+                Please enter the serial numbers of the parts you want to search
+                if they are in the inventory.
               </h1>
             </div>
           </div>
@@ -194,32 +198,37 @@
           <div class="row">
             <div class="col-md-12">
               <div class="center-form">
-                  <form
-                  class="form"
-                  action="/it/search/set"
-                  method="post"
-                  >
-                  {% with messages = get_flashed_messages(category_filter=["search_set"])
-                    %} {% if messages %} {% for message in messages %}
-                    <p class="text-danger text-center">{{ message }}</p>
-                    {% endfor %} {% endif %} {% endwith %}
+                <form class="form" action="/it/search/set" method="post">
+                  {% with messages =
+                  get_flashed_messages(category_filter=["search_set"]) %} {% if
+                  messages %} {% for message in messages %}
+                  <p class="text-danger text-center">{{ message }}</p>
+                  {% endfor %} {% endif %} {% endwith %}
                   <span class="input-span">
-                    <label for="computer_sn" class="label">Computer Serial Number</label>
+                    <label for="computer_sn" class="label"
+                      >Computer Serial Number</label
+                    >
                     <input type="text" name="computer_sn" id="computer_sn"
                   /></span>
                   <span class="input-span">
-                    <label for="monitor_sn" class="label">Monitor Serial Number</label>
+                    <label for="monitor_sn" class="label"
+                      >Monitor Serial Number</label
+                    >
                     <input type="text" name="monitor_sn" id="monitor_sn"
                   /></span>
                   <span class="input-span">
-                    <label for="headset_sn" class="label">Headset Serial Number</label>
+                    <label for="headset_sn" class="label"
+                      >Headset Serial Number</label
+                    >
                     <input type="text" name="headset_sn" id="headset_sn"
                   /></span>
                   <span class="input-span">
-                    <label for="adapter_sn" class="label">Headset Adapter Serial Number</label>
+                    <label for="adapter_sn" class="label"
+                      >Headset Adapter Serial Number</label
+                    >
                     <input type="text" name="adapter_sn" id="adapter_sn"
                   /></span>
-                  <br>
+                  <br />
                   <input class="submit" type="submit" value="Search" />
                 </form>
               </div>

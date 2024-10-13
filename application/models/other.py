@@ -16,6 +16,36 @@ class Other:
         self.dp_vga = data['dp_vga']
         self.ac = data['ac']
         self.lan = data['lan']
+        self.created_at = data['created_at']
+    
+    
+    @classmethod
+    def add_other(cls, data):
+        query = """
+            INSERT INTO others
+                (created_at, model{extra_columns})
+            VALUES
+                (NOW(), %(model)s{extra_values});
+        """
+        
+        # Optional fields
+        optional_fields = ['mouse', 'keyboard', 'dp_vga', 'ac', 'lan']
+        
+        # Dynamic parts for optional columns and values
+        extra_columns = ""
+        extra_values = ""
+        
+        # Add optional fields if present in data
+        for field in optional_fields:
+            if field in data and data[field] is not None:
+                extra_columns += f", {field}"
+                extra_values += f", %({field})s"
+        
+        # Format query with additional columns/values if necessary
+        query = query.format(extra_columns=extra_columns, extra_values=extra_values)
+        
+        # Execute the query
+        return connectToMySQL(cls.db_name).query_db(query, data)
     
     
     @classmethod
@@ -75,6 +105,21 @@ class Other:
             WHERE other_id = %(other_id)s;
         """
         connectToMySQL(cls.db_name).query_db(query, data)
+        
+    
+    @classmethod
+    def get_other_id(cls, data):
+        query = """
+            SELECT
+                other_id
+            FROM others
+            ORDER BY other_id DESC
+            LIMIT 1;
+        """
+        result = connectToMySQL(cls.db_name).query_db(query, data)
+        if result:
+            return result[0]
+        return None
     
     
     @staticmethod

@@ -10,10 +10,36 @@ class Monitor:
     db_name = DB_NAME
 
     def __init__(self, data):
-        self.monitor_id = data['monitor_id']
+        self.monitor_sn = data['monitor_sn']
         self.model = data['model']
-        self.model_sn = data['model_sn']
         self.size = data['size']
+    
+    
+    @classmethod
+    def add_monitor(cls, data):
+        # Base query with mandatory fields
+        query = """
+            INSERT INTO monitors
+                (model, monitor_sn{extra_columns})
+            VALUES
+                (%(model)s, %(monitor_sn)s{extra_values});
+        """
+        
+        # Initialize optional column and value parts
+        extra_columns = ""
+        extra_values = ""
+        
+        # Check if 'size' is provided, if so, include it in the query
+        if 'size' in data and data['size'] is not None:
+            extra_columns = ", size"
+            extra_values = ", %(size)s"
+        
+        # Format the query with optional 'size' if provided
+        query = query.format(extra_columns=extra_columns, extra_values=extra_values)
+        
+        # Execute the query
+        return connectToMySQL(cls.db_name).query_db(query, data)
+
     
     
     @classmethod
@@ -37,7 +63,7 @@ class Monitor:
             SELECT
                 *
             FROM monitors
-            WHERE model_sn = %(model_sn)s;
+            WHERE monitor_sn = %(monitor_sn)s;
         """
         result = connectToMySQL(cls.db_name).query_db(query, data)
         if result:
@@ -51,12 +77,12 @@ class Monitor:
             UPDATE monitors
             SET
                 model = %(model)s,
-                model_sn = %(model_sn)s
+                monitor_sn = %(monitor_sn)s
         """
         if data['size'] != "" and data['size'] != None and data['size'] != "None":
             query += ", size = %(size)s"
         query += """
-            WHERE monitor_id = %(monitor_id)s;
+            WHERE monitor_sn = %(monitor_sn)s;
         """
         connectToMySQL(cls.db_name).query_db(query, data)
         
@@ -67,7 +93,7 @@ class Monitor:
             SELECT
                 *
             FROM monitors
-            WHERE monitor_id = %(monitor_id)s;
+            WHERE monitor_sn = %(monitor_sn)s;
         """
         result = connectToMySQL(cls.db_name).query_db(query, data)
         if result:
@@ -79,7 +105,7 @@ class Monitor:
     def delete_monitor(cls, data):
         query = """
             DELETE FROM monitors
-            WHERE monitor_id = %(monitor_id)s;
+            WHERE monitor_sn = %(monitor_sn)s;
         """
         connectToMySQL(cls.db_name).query_db(query, data)
     
@@ -90,7 +116,7 @@ class Monitor:
         if data['model'] == "" or data['model'] == None:
             is_valid = False
             flash("Model is required","monitor_edit")
-        if data['model_sn'] == "" or data['model_sn'] == None:
+        if data['monitor_sn'] == "" or data['monitor_sn'] == None or not data['monitor_sn']:
             is_valid = False
             flash("Model SN is required","monitor_edit")
         if data['size'] == "" or data['size'] == None:

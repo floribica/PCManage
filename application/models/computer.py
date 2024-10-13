@@ -16,6 +16,36 @@ class Computer:
         self.storage_type = data['storage_type']
         self.storage_value = data['storage_value']
 
+    
+    @classmethod
+    def add_computer(cls, data):
+        # Base query with mandatory fields
+        query = """
+            INSERT INTO computers
+                (serial_nr, model{extra_columns})
+            VALUES
+                (%(serial_nr)s, %(model)s{extra_values});
+        """
+        
+        # Optional fields
+        optional_fields = ['cpu', 'ram', 'storage_type', 'storage_value']
+        
+        # Dynamic parts for optional columns and values
+        extra_columns = ""
+        extra_values = ""
+        
+        # Add optional fields if present in data
+        for field in optional_fields:
+            if field in data and data[field] is not None:
+                extra_columns += f", {field}"
+                extra_values += f", %({field})s"
+        
+        # Format query with additional columns/values if necessary
+        query = query.format(extra_columns=extra_columns, extra_values=extra_values)
+        
+        # Execute the query
+        return connectToMySQL(cls.db_name).query_db(query, data)
+
 
     @classmethod
     def get_all_computers(cls):
@@ -73,4 +103,14 @@ class Computer:
             WHERE serial_nr = %(serial_nr)s;
         """
         connectToMySQL(cls.db_name).query_db(query, data)
+        
+        
+    @staticmethod
+    def validate_computer(data):
+        is_valid = True
+        if data['serial_nr'] == "" or data['serial_nr'] == None:
+            is_valid = False
+        if data['model'] == "" or data['model'] == None:
+            is_valid = False
+        return is_valid
     

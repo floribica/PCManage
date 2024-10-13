@@ -21,7 +21,7 @@ def reset_password():
         
         try:
             message = password_email(reset_data["email"], password)
-            send_email(reset_data["username"],"Password Reset", message)
+            send_email(reset_data["email"],"Password Reset", message)
         except:
             flash("Failed to send email.", "reset")
             return redirect('/admin/reset_password')

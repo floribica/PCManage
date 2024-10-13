@@ -1,8 +1,7 @@
 name: Monitor
 description: Monitor
 
-model: ""
-model_sn: ""
-size: ""
+model: "--"
+size: 0
 
 version: 1.0.0

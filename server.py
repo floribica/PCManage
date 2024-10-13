@@ -16,7 +16,8 @@ from application.controllers.it import (
     dashboard,
     change_password,
     trace_requests,
-    hr_requests
+    hr_requests,
+    users
 )
 from application.controllers.it.inventory import (
     computers,
