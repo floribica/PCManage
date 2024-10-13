@@ -31,3 +31,44 @@ class PC_Action:
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
     
+    
+    @classmethod
+    def get_all_pc_actions(cls):
+        query = """
+            SELECT
+                *
+            FROM pc_action;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query)
+        pc_actions = []
+        if results:
+            for pc_action in results:
+                pc_actions.append(pc_action)
+        return pc_actions
+    
+    
+    @classmethod
+    def procesverbal_data(cls, data):   
+        query = """
+            SELECT
+                pc_action.*,
+                hrs.*,
+                computers.*,
+                monitors.*,
+                headsets.*,
+                others.*,
+                users.username
+            FROM pc_action
+            JOIN hrs ON pc_action.hr_id = hrs.hr_id
+            JOIN computers ON pc_action.computer_sn = computers.serial_nr
+            JOIN monitors ON pc_action.monitor_sn = monitors.monitor_sn
+            JOIN headsets ON pc_action.headset_id = headsets.headset_id
+            JOIN others ON pc_action.other_id = others.other_id
+            JOIN users ON pc_action.user_id = users.user_id
+            WHERE pc_action_id = %(pc_action_id)s;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        if results:
+            return results[0]
+        return None
+    

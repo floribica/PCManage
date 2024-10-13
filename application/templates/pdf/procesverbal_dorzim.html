@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ pdf_title }}</title>
+    <style>
+      @media print {
+        @page {
+          size: A4;
+          margin: 0; /* No margins for the A4 page */
+        }
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0; /* Set to zero to use full page */
+        padding: 20px; /* Padding for content */
+        line-height: 1.5;
+        color: #333;
+        height: 100vh; /* Full height */
+        box-sizing: border-box; /* Includes padding in width/height */
+      }
+
+      h1 {
+        text-align: center;
+        color: #0056b3;
+        margin-bottom: 10px;
+        font-size: 24px; /* Increased font size */
+      }
+
+      h2 {
+        text-align: center;
+        color: #007bff;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 20px; /* Increased font size */
+      }
+
+      .section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+
+      .section p {
+        margin: 5px 0;
+      }
+
+      .signature {
+        margin-top: 50px;
+        padding: 15px;
+        border-top: 2px solid #0056b3;
+      }
+
+      .signature div {
+        margin-top: 30px;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+
+      .signature strong {
+        color: #0056b3;
+      }
+
+      .footer {
+        margin-top: 50px;
+        font-size: 12px;
+        text-align: center;
+        color: #777;
+      }
+
+      .footer br {
+        margin: 5px 0;
+      }
+
+      .highlight {
+        font-size: larger;
+        font-weight: bolder;
+        padding: 5px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PROCES – VERBAL</h1>
+    <h2>({{ pdf_title }})</h2>
+    <br /><br /><br />
+    <div class="section">
+      <p>
+        Sot, në datë {{ date }}, ora {{ time }}, pranë ambienteve të shoqërisë
+        “Comdata Albania”, sh.p.k., në Tiranë, i mbajtur midis përfaqësuesit të
+        Punëdhënësit dhe Punëmarrësit, për rikthimin e këtyre mjeteve të punës:
+      </p>
+    </div>
+
+    <div class="section">
+      <br /><br /><br />
+      <p>
+        1. Laptop, Marka <span class="highlight"> ______________</span>, Lloji
+        <span class="highlight">{{ model }}</span>, me këto të dhëna:
+      </p>
+      <p>Computer S/N: <span class="highlight">{{ serial_nr }}</span>.</p>
+      <p>
+        CPU: <span class="highlight">{{ cpu }}</span>, RAM:
+        <span class="highlight">{{ ram }}</span>, Storage Type:
+        <span class="highlight">{{ storage_type }}</span>, Storage Value:
+        <span class="highlight">{{ storage_value }}</span>
+      </p>
+      <hr />
+      <br /><br /><br />
+      <p>
+        2. Monitor Model: <span class="highlight">{{ monitor_model }}</span>,
+        Monitor Serial Number: <span class="highlight">{{ monitor_sn }}</span>,
+        Monitor Size: <span class="highlight">{{ size }}</span>
+      </p>
+      <hr />
+      <br />
+      <p>
+        3. Modeli i Kufjeve: <span class="highlight">{{ headset_model }}</span>,
+        S/N: <span class="highlight">{{ headset_sn }}</span>
+      </p>
+      <p>
+        Adapter i Kufjeve: <span class="highlight">{{ adapter_model }}</span>,
+        S/N: <span class="highlight">{{ adapter_sn }}</span>
+      </p>
+      <hr />
+      <br /><br /><br />
+      <p>
+        4. Mouse: <span class="highlight">{{ mouse }}</span>, Keyboard:
+        <span class="highlight">{{ keyboard }}</span>, Monitor Adapter:
+        <span class="highlight">{{ dp_vga }}</span>, Karikues
+        <span class="highlight">{{ ac }}</span> copë, Lan:
+        <span class="highlight">{{ lan }}</span>
+      </p>
+      <hr />
+      <br /><br /><br />
+      <p>
+        5. Përshkrim i gjendjes së mjeteve të punës:
+        <span class="highlight">
+          _____________________________________________________________________________________________________________________________________________________.</span
+        >
+      </p>
+    </div>
+    <div class="signature">
+      <br /><br /><br />
+      <p>
+        Me nënshkrimin e këtij proces – verbali provohet rikthimi i mjeteve nga
+        Punëmarrësi tek Punëdhënësi, në gjendjen e përshkruar më sipër.
+      </p>
+
+      <div>
+        <strong>Të pranishmit:</strong>
+      </div>
+      <div
+        style="display: flex; justify-content: space-between; margin-top: 10px"
+      >
+        <div>
+          <strong>Për Punëdhënësin:</strong>
+          <br />Emër: <span class="highlight">{{ employer_name }}</span>
+          <br />Nënshkrimi: _____________________
+        </div>
+
+        <div>
+          <strong>Punëmarrësi:</strong>
+          <br />Emër: <span class="highlight">{{ employee_name }}</span>
+          <br />Nënshkrimi: _____________________
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Konecta Albania SHPK<br />
+      NUIS: L81605038L<br />
+      Rruga „Janos Hunyadi“ nr. 20 Tirane
+    </div>
+  </body>
+</html>

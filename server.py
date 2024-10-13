@@ -17,7 +17,8 @@ from application.controllers.it import (
     change_password,
     trace_requests,
     hr_requests,
-    users
+    users,
+    procesverbal
 )
 from application.controllers.it.inventory import (
     computers,
