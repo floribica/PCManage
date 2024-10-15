@@ -10,31 +10,33 @@ class PDFGenerator:
     @staticmethod
     def generate_procesverbal_pdf(data, pdf_title):
         # Render the HTML template
+        date = datetime.now().strftime("%d/%m/%Y")
+        time = datetime.now().strftime("%H:%M")
         rendered_html = render_template(
             'pdf/procesverbal_dorzim.html',
-            pdf_title=pdf_title,
-            date=data.get('created_date', '___/___/_______').strftime("%d/%m/%Y"),
-            time=data.get('rikthim_date', '___:____').strftime("%H:%M"),
-            serial_nr=data.get('serial_nr', 'N/A'),
-            model=data.get('model', 'N/A'),
-            cpu=data.get('cpu', 'N/A'),
-            ram=data.get('ram', 'N/A'),
-            storage_type=data.get('storage_type', 'N/A'),
-            storage_value=data.get('storage_value', 'N/A'),
-            monitor_sn=data.get('monitor_sn', 'N/A'),
-            monitor_model=data.get('monitors.model', 'N/A'),
-            size=data.get('size', 'N/A'),
-            adapter_model=data.get('adapter_model', 'N/A'),
-            adapter_sn=data.get('adapter_sn', 'N/A'),
-            headset_model=data.get('headset_model', 'N/A'),
-            headset_sn=data.get('headset_sn', 'N/A'),
-            mouse=data.get('mouse', 'No'),
-            keyboard=data.get('keyboard', 'No'),
-            dp_vga=data.get('dp_vga', 'N/A'),
-            ac=data.get('ac', 'N/A'),
-            lan=data.get('lan', 'N/A'),
-            employer_name=data.get('username', 'N/A'),
-            employee_name=f"{data['first_name']} {data['last_name']}",
+            pdf_title=pdf_title.upper(),
+            date=date.upper(),
+            time=time.upper(),
+            serial_nr=data.get('serial_nr', '__________').upper(),
+            model=data.get('model', '__________').upper(),
+            cpu=data.get('cpu', '__________').upper(),
+            ram=data.get('ram', '__________').upper(),
+            storage_type=data.get('storage_type', '__________').upper(),
+            storage_value=data.get('storage_value', '__________').upper(),
+            monitor_sn=data.get('monitor_sn', '__________').upper(),
+            monitor_model=data.get('monitors.model', '__________').upper(),
+            size=data.get('size', '__________'),
+            adapter_model=data.get('adapter_model', '__________').upper(),
+            adapter_sn=data.get('adapter_sn', '__________').upper(),
+            headset_model=data.get('headset_model', '__________').upper(),
+            headset_sn=data.get('headset_sn', '__________').upper(),
+            mouse=data.get('mouse', 'No').upper(),
+            keyboard=data.get('keyboard', 'No').upper(),
+            dp_vga=data.get('dp_vga', '__________').upper(),
+            ac=data.get('ac', '__________').upper(),
+            lan=data.get('lan', '__________').upper(),
+            employer_name=data.get('username', '__________').upper(),
+            employee_name=f"{data['first_name'].upper()} {data['last_name'].upper()}"
         )
 
         # Create a timestamped file name

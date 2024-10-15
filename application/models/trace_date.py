@@ -74,3 +74,29 @@ class Trace:
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
     
+    
+    @classmethod
+    def add_request(cls, data):
+        query = """
+            INSERT INTO trace_date
+                (request_date)
+            VALUES
+                (%(request_date)s);
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    
+    @classmethod
+    def get_last_trace_date_id(cls):
+        query = """
+            SELECT
+                trace_date_id
+            FROM trace_date
+            ORDER BY trace_date_id DESC
+            LIMIT 1;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query)
+        if results:
+            return results[0]
+        return None
+    

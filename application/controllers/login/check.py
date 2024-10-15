@@ -16,5 +16,11 @@ def check():
         return redirect('/admin/dashboard')
     if session['user']['role'] == 'it':
         return redirect('/it/dashboard')
+    if session['user']['role'] == 'recruiter':
+        return redirect('/recruiter/dashboard')
+    if session['user']['role'] == 'receptionist':
+        return redirect('/receptionist/dashboard')
+    if session['user']['role'] == 'planning':
+        return redirect('/planning/dashboard')
     session.clear()
     return redirect('/login')   

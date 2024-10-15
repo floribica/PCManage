@@ -155,3 +155,46 @@ class Hrs:
             return results[0]
         return None
     
+    
+    @classmethod
+    def get_cancel_reason(cls, data):
+        query = """
+        SELECT
+            cancel_reason
+        FROM hrs
+        WHERE hr_id = %(hr_id)s;
+        """
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        if results:
+            return results[0]["cancel_reason"]
+        return None
+    
+    
+    @classmethod
+    def add_request(cls, data):
+        query = """
+        INSERT INTO hrs
+            (first_name, last_name, email, fushata, trace_date_id)
+        VALUES
+            (%(first_name)s, %(last_name)s, %(email)s, %(fushata)s, %(trace_date_id)s);
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    
+    @staticmethod
+    def validate_add_request(data):
+        is_valid = True
+        if not data["first_name"]:
+            flash("First name is required.", "add_request")
+            is_valid = False
+        if not data["last_name"]:
+            flash("Last name is required.", "add_request")
+            is_valid = False
+        if not data["email"]:
+            flash("Email is required.", "add_request")
+            is_valid = False
+        if not data["fushata"]:
+            flash("Fushata is required.", "add_request")
+            is_valid = False
+        return is_valid
+    

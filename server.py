@@ -31,6 +31,12 @@ from application.controllers.it.del_headsets import (
     headsets,
     add_headset,
 )
+from application.controllers.recruiter import (
+    dashboard,
+    trace_requests,
+    change_password,
+    add_request
+)
 
 
 load_dotenv()

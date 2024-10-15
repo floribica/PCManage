@@ -23,7 +23,7 @@ def login():
             if bcrypt.check_password_hash(user['password'], login_data['password']):
                 # Store user in session and redirect to dashboard
                 session['user'] = user
-                return redirect('/admin/dashboard')
+                return redirect('/check')
 
         # If authentication fails, redirect to login page
         return redirect('/')

@@ -122,7 +122,7 @@ class User:
         if not check_email(data['email']):
             flash("Invalid email address", "register")
             return False
-        if data["role"] not in ["admin", "it", "recruiter","receptionist"]:
+        if data["role"] not in ["admin", "it", "recruiter","receptionist", "planning"]:
             flash("Invalid role.", "register")
             is_valid = False
         return is_valid

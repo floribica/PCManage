@@ -26,7 +26,10 @@
       href="../../../static/css/it/inventory/computers/dataTables.bootstrap.css"
       rel="stylesheet"
     />
-    <link href="../../static/css/it/cancel_modal.css" rel="stylesheet" />
+    <link
+      href="../../static/css/recruiter/cancel_reason.css"
+      rel="stylesheet"
+    />
 
     <!-- GOOGLE FONTS-->
     <link
@@ -81,84 +84,29 @@
                 />
 
                 <div class="inner-text">
-                  Flori Bica
+                  {{full_name}}
                   <br />
-                  <small>Last Login : 2 Weeks Ago </small>
                 </div>
               </div>
             </li>
 
             <li>
-              <a href="/"
-                ><i class="fa fa-dashboard"></i>Dashboard</a
-              >
+              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
             <li>
-              <a href="/it/users"
-                ><i class="fa fa-user"></i>Users</a
-              >
+              <a href="/recruiter/add/request"
+                ><i class="fa fa-pencil-square-o"></i>Add Request
+              </a>
             </li>
             <li>
-              <a href="/procesverbal"
-                ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
-              >
-            </li>
-            <li>
-              <a href="#"
-                ><i class="fa fa-yelp"></i>Inventory
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="/it/computers"><i class="fa fa-laptop"></i>Computers</a>
-                </li>
-                <li>
-                  <a href="/it/monitors"><i class="fa fa-desktop"></i>Monitors</a>
-                </li>
-                <li>
-                  <a href="/it/headsets"
-                    ><i class="fa fa-headphones"></i>Headsets</a
-                  >
-                </li>
-                <li>
-                  <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
-                </li>
-                <li>
-                  <a href="/it/search/set"
-                    ><i class="fa fa-plus" aria-hidden="true"></i>Add Set</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#"
-                ><i class="fa fa-headphones"></i>Delivero Headsets
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="/it/del/headsets"
-                    ><i class="fa fa-headphones"></i>Headsets</a
-                  >
-                </li>
-                <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="/it/hrs/trace"
+              <a class="active-menu" href="/recruiter/trace/requests"
                 ><i class="fa fa-list-ol"></i>Trace Requests
               </a>
             </li>
             <li>
-              <a class="active-menu" href="/it/hrs/request"
-                ><i class="fa fa-bullhorn"></i>HR Requests
-              </a>
-            </li>
-            <li>
-              <a href="/it/change_password"
-                ><i class="fa fa-pencil" aria-hidden="true"></i>Change Password</a
+              <a href="/recruiter/change_password"
+                ><i class="fa fa-pencil" aria-hidden="true"></i>Change
+                Password</a
               >
             </li>
             <li>
@@ -172,9 +120,10 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">HR Requests</h1>
+              <h1 class="page-head-line">Request History</h1>
               <h1 class="page-subhead-line">
-                Here you can see all the HR requests.
+                Here you can trace all the requests that have been made by the
+                HR department.
               </h1>
             </div>
           </div>
@@ -205,12 +154,10 @@
                           <th>ID</th>
                           <th>Request By</th>
                           <th>Operator Name</th>
-                          <th>Operator Email</th>
                           <th>Status</th>
                           <th>Request Date</th>
                           <th>Authorization Date</th>
                           <th>Fushata</th>
-                          <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -218,8 +165,7 @@
                         <tr class="odd gradeX">
                           <td>{{request.hr_id}}</td>
                           <td>{{request.request_by}}</td>
-                          <td>{{request.first_name}} {{request.last_name}}</td>
-                          <td>{{request.email}}</td>
+                          <td>{{request.first_name}} {{request.first_name}}</td>
                           <td class="center">
                             {% if request.statusi == 'request' %}
                             <span class="label label-warning">Request</span>
@@ -232,7 +178,12 @@
                             {% elif request.statusi == 'returned' %}
                             <span class="label label-danger">Returned</span>
                             {% elif request.statusi == 'cancel' %}
-                            <span class="label label-danger">Canceled</span>
+                            <span
+                              class="label label-danger"
+                              onclick="openCancelModal(this)"
+                              data-hr-id="{{request.hr_id}}"
+                              >Canceled</span
+                            >
                             {% else%}
                             <span class="label label-danger">ERROR</span>
                             {% endif %}
@@ -246,20 +197,6 @@
                           </td>
                           {% endif %}
                           <td>{{request.fushata}}</td>
-                          <td>
-                            <a
-                              href="/it/hrs/approve/{{request.hr_id}}"
-                              class="btn btn-success"
-                              ><i class="fa fa-check" aria-hidden="true"></i
-                            ></a>
-                            <a
-                              href="#"
-                              class="btn btn-danger"
-                              onclick="openCancelModal('{{request.hr_id}}')"
-                            >
-                              <i class="fa fa-times" aria-hidden="true"></i>
-                            </a>
-                          </td>
                         </tr>
                         {% endfor %}
                       </tbody>
@@ -273,28 +210,13 @@
           <div class="modal-overlay"></div>
 
           <!-- Modal -->
-          <div class="card" id="cancelModal" data-serial-nr="">
+          <div class="card" id="cancelModal" data-serial-nr="" style="display: none;">
             <div class="card-content">
-              <p class="card-heading">Cancel Request?</p>
-              <p class="card-description">
-                Please provide a reason for cancellation:
-              </p>
-              <input
-                type="text"
-                id="cancelReason"
-                placeholder="Enter reason here"
-              />
+              <p class="card-heading">Cancel Reason</p>
+              <p class="cancel-reason" id="cancelReason"></p> <!-- Updated to show reason -->
             </div>
             <div class="card-button-wrapper">
-              <button
-                class="card-button secondary"
-                onclick="closeCancelModal()"
-              >
-                Cancel
-              </button>
-              <button class="card-button primary" id="confirmCancelButton">
-                Submit
-              </button>
+              <button class="card-button secondary" onclick="closeCancelModal()">Cancel</button>
             </div>
             <button class="exit-button" onclick="closeCancelModal()">
               <svg height="20px" viewBox="0 0 384 512">
@@ -324,7 +246,7 @@
     <script src="../../../static/assets/js/table/jquery.metisMenu.js"></script>
     <script src="../../../static/assets/js/table/dataTables/jquery.dataTables.js"></script>
     <script src="../../../static/assets/js/table/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../../static/js/it/cancel_request.js"></script>
+    <script src="../../static/js/recruiter/cancel_reason.js"></script>
     <script>
       $(document).ready(function () {
         $("#dataTables-example").dataTable();
