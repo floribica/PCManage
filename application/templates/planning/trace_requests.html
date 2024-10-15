@@ -23,13 +23,14 @@
       rel="stylesheet"
     />
     <link
-      href="../../../static/css/it/inventory/confirm_modal.css"
-      rel="stylesheet"
-    />
-    <link
       href="../../../static/css/it/inventory/computers/dataTables.bootstrap.css"
       rel="stylesheet"
     />
+    <link
+      href="../../static/css/recruiter/cancel_reason.css"
+      rel="stylesheet"
+    />
+
     <!-- GOOGLE FONTS-->
     <link
       href="http://fonts.googleapis.com/css?family=Open+Sans"
@@ -83,84 +84,29 @@
                 />
 
                 <div class="inner-text">
-                  Flori Bica
+                  {{full_name}}
                   <br />
-                  <small>Last Login : 2 Weeks Ago </small>
                 </div>
               </div>
             </li>
 
             <li>
-              <a href="/"
-                ><i class="fa fa-dashboard"></i>Dashboard</a
-              >
+              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
             <li>
-              <a href="/it/users"
-                ><i class="fa fa-user"></i>Users</a
-              >
+              <a href="/planning/confirm/requests"
+                ><i class="fa fa-check-square-o"></i>Confirm Requests
+              </a>
             </li>
             <li>
-              <a href="/procesverbal"
-                ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
-              >
-            </li>
-            <li class="open">
-              <a href="#"
-                ><i class="fa fa-yelp"></i>Inventory
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="/it/computers"><i class="fa fa-laptop"></i>Computers</a>
-                </li>
-                <li>
-                  <a class="active-menu" href="/it/monitors"><i class="fa fa-desktop"></i>Monitors</a>
-                </li>
-                <li>
-                  <a href="/it/headsets"
-                    ><i class="fa fa-headphones"></i>Headsets</a
-                  >
-                </li>
-                <li>
-                  <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
-                </li>
-                <li>
-                  <a href="/it/search/set"
-                    ><i class="fa fa-plus" aria-hidden="true"></i>Add Set</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#"
-                ><i class="fa fa-headphones"></i>Delivero Headsets
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="/it/del/headsets"
-                    ><i class="fa fa-headphones"></i>Headsets</a
-                  >
-                </li>
-                <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="/it/hrs/trace"
+              <a class="active-menu" href="/planning/trace/requests"
                 ><i class="fa fa-list-ol"></i>Trace Requests
               </a>
             </li>
             <li>
-              <a href="/it/hrs/request"
-                ><i class="fa fa-bullhorn"></i>HR Requests
-              </a>
-            </li>
-            <li>
-              <a href="/it/change_password"
-                ><i class="fa fa-key" aria-hidden="true"></i>Change Password</a
+              <a href="/planning/change_password"
+                ><i class="fa fa-key" aria-hidden="true"></i>Change
+                Password</a
               >
             </li>
             <li>
@@ -174,15 +120,14 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">Monitor</h1>
+              <h1 class="page-head-line">Request History</h1>
               <h1 class="page-subhead-line">
-                Here you can view, edit and delete monitors.
+                Here you can trace all the requests that have been made by the
+                HR department.
               </h1>
             </div>
           </div>
-          <!-- /. ROW  -->
           <hr />
-          <!-- load html -->
           <div class="loader" id="loader" style="display: none">
             <div class="loader-inner">
               <div class="loader-square"></div>
@@ -197,7 +142,6 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <!-- Advanced Tables -->
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -207,66 +151,74 @@
                     >
                       <thead>
                         <tr>
-                          <th>Serial Number</th>
-                          <th>Model</th>
-                          <th>Size</th>
-                          <th>Actions</th>
+                          <th>ID</th>
+                          <th>Request By</th>
+                          <th>Operator Name</th>
+                          <th>Status</th>
+                          <th>Request Date</th>
+                          <th>Authorization Date</th>
+                          <th>Fushata</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for monitor in monitors %}
+                        {% for request in requests %}
                         <tr class="odd gradeX">
-                          <td>{{monitor.monitor_sn}}</td>
-                          <td>{{monitor.model}}</td>
-                          <td>{{monitor.size}}</td>
-                          <td>
-                            <a
-                              href="/it/monitors/edit/{{monitor.monitor_sn}}"
-                              class="btn btn-primary"
-                              ><i class="fa fa-key" aria-hidden="true"></i
-                            ></a>
-                            <a
-                              href="javascript:void(0);"
-                              class="btn btn-danger"
-                              onclick="openDeleteModal('{{monitor.monitor_sn}}')"
+                          <td>{{request.hr_id}}</td>
+                          <td>{{request.request_by}}</td>
+                          <td>{{request.first_name}} {{request.last_name}}</td>
+                          <td class="center">
+                            {% if request.statusi == 'request' %}
+                            <span class="label label-warning">Request</span>
+                            {% elif request.statusi == 'approved' %}
+                            <span class="label label-success">Approved</span>
+                            {% elif request.statusi == 'ready' %}
+                            <span class="label label-info">Ready</span>
+                            {% elif request.statusi == 'submitted' %}
+                            <span class="label label-primary">Submitted</span>
+                            {% elif request.statusi == 'returned' %}
+                            <span class="label label-danger">Returned</span>
+                            {% elif request.statusi == 'cancel' %}
+                            <span
+                              class="label label-danger"
+                              onclick="openCancelModal(this)"
+                              data-hr-id="{{request.hr_id}}"
+                              >Canceled</span
                             >
-                              <i
-                                class="fa fa-times-circle"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
+                            {% else%}
+                            <span class="label label-danger">ERROR</span>
+                            {% endif %}
                           </td>
+                          <td>{{ request.created_at.strftime('%Y-%m-%d') }}</td>
+                          {% if not request.authorization_date %}
+                          <td>Not Authorizate</td>
+                          {% else %}
+                          <td>
+                            {{request.authorization_date.strftime('%Y-%m-%d')}}
+                          </td>
+                          {% endif %}
+                          <td>{{request.fushata}}</td>
                         </tr>
-
                         {% endfor %}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-              <!--End Advanced Tables -->
             </div>
           </div>
-          <!-- /. ROW  -->
-          <div class="card" id="deleteModal" data-serial-nr="">
+          <!-- Modal Overlay -->
+          <div class="modal-overlay"></div>
+
+          <!-- Modal -->
+          <div class="card" id="cancelModal" data-serial-nr="" style="display: none;">
             <div class="card-content">
-              <p class="card-heading">Delete Monitor?</p>
-              <p class="card-description">
-                Are you sure you want to delete this Monitor?
-              </p>
+              <p class="card-heading">Cancel Reason</p>
+              <p class="cancel-reason" id="cancelReason"></p> <!-- Updated to show reason -->
             </div>
             <div class="card-button-wrapper">
-              <button
-                class="card-button secondary"
-                onclick="closeDeleteModal()"
-              >
-                Cancel
-              </button>
-              <button class="card-button primary" id="confirmDeleteButton">
-                Delete
-              </button>
+              <button class="card-button secondary" onclick="closeCancelModal()">Cancel</button>
             </div>
-            <button class="exit-button" onclick="closeDeleteModal()">
+            <button class="exit-button" onclick="closeCancelModal()">
               <svg height="20px" viewBox="0 0 384 512">
                 <path
                   d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
@@ -276,17 +228,11 @@
           </div>
         </div>
       </div>
-      <!-- /. PAGE INNER  -->
     </div>
-    <!-- /. PAGE WRAPPER  -->
-    <!-- /. WRAPPER  -->
     <div id="footer-sec">
       &copy; 2024 Konecta | Design By :
       <a href="" target="_blank">Flori Bica</a>
     </div>
-    <!-- /. FOOTER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
     <script src="../../static/assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="../../static/assets/js/bootstrap.js"></script>
@@ -294,17 +240,13 @@
     <script src="../../static/assets/js/jquery.metisMenu.js"></script>
     <!-- CUSTOM SCRIPTS -->
     <script src="../../static/assets/js/custom.js"></script>
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
+    <!-- SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
     <script src="../../../static/assets/js/table/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
     <script src="../../../static/assets/js/table/dataTables/jquery.dataTables.js"></script>
     <script src="../../../static/assets/js/table/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../../../static/js/it/inventory/monitor_modal.js"></script>
+    <script src="../../static/js/recruiter/cancel_reason.js"></script>
     <script>
       $(document).ready(function () {
         $("#dataTables-example").dataTable();

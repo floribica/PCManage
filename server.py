@@ -37,6 +37,12 @@ from application.controllers.recruiter import (
     change_password,
     add_request
 )
+from application.controllers.planning import (
+    dashboard,
+    trace_requests,
+    change_password,
+    confirm_request
+)
 
 
 load_dotenv()

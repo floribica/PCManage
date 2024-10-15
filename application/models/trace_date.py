@@ -100,3 +100,14 @@ class Trace:
             return results[0]
         return None
     
+    
+    @classmethod
+    def authorization_request(cls, data):
+        query = """
+        UPDATE trace_date
+        SET
+            authorization_date = %(authorization_date)s
+        WHERE trace_date_id = %(trace_date_id)s;
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    

@@ -58,6 +58,26 @@ class Hrs:
     
     
     @classmethod
+    def get_all_requests_and_approved(cls):
+        query = """
+        SELECT
+            hrs.*,
+            trace_date.authorization_date
+        FROM hrs
+        JOIN trace_date
+        ON hrs.trace_date_id = trace_date.trace_date_id
+        WHERE statusi = 'request'
+        OR statusi = 'approved';
+        """
+        results = connectToMySQL(cls.db_name).query_db(query)
+        requests = []
+        if results:
+            for request in results:
+                requests.append(request)
+        return requests
+    
+    
+    @classmethod
     def get_all_approved_request(cls):
         query = """
         SELECT
