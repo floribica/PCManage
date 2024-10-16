@@ -47,7 +47,7 @@ def it_application_hrs_ready(hr_id):
 def it_application_hrs_submitted(hr_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "receptionist"]:
         return redirect("/login")
     
     data = {
@@ -62,7 +62,10 @@ def it_application_hrs_submitted(hr_id):
     Trace.submitted_request(data)
     Hrs.submitted_request(data)
     
-    return redirect("/it/hrs/trace")
+    if session["user"]["role"] == "it":
+        return redirect("/it/hrs/trace")
+    else:
+        return redirect("/receptionist/ready/requests")
 
 
 @app.route('/it/hrs/trace/returned/<int:hr_id>')

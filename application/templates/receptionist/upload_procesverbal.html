@@ -26,10 +26,8 @@
       href="../../../static/css/it/inventory/computers/dataTables.bootstrap.css"
       rel="stylesheet"
     />
-    <link
-      href="../../../static/css/it/inventory/confirm_modal.css"
-      rel="stylesheet"
-    />
+    <link href="../../static/css/receptionist/upload_modal.css" rel="stylesheet" />
+
     <!-- GOOGLE FONTS-->
     <link
       href="http://fonts.googleapis.com/css?family=Open+Sans"
@@ -83,83 +81,27 @@
                 />
 
                 <div class="inner-text">
-                  Flori Bica
+                  {{full_name}}
                   <br />
-                  <small>Last Login : 2 Weeks Ago </small>
                 </div>
               </div>
             </li>
 
             <li>
-              <a href="/"
-                ><i class="fa fa-dashboard"></i>Dashboard</a
-              >
+              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
             <li>
-              <a href="/it/users"
-                ><i class="fa fa-user"></i>Users</a
-              >
-            </li>
-            <li>
-              <a href="/procesverbal"
-                ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
-              >
-            </li>
-            <li class="open">
-              <a href="#"
-                ><i class="fa fa-yelp"></i>Inventory
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="/it/computers"><i class="fa fa-laptop"></i>Computers</a>
-                </li>
-                <li>
-                  <a href="/it/monitors"><i class="fa fa-desktop"></i>Monitors</a>
-                </li>
-                <li>
-                  <a href="/it/headsets"
-                    ><i class="fa fa-headphones"></i>Headsets</a
-                  >
-                </li>
-                <li>
-                  <a class="active-menu" href="/it/others"><i class="fa fa-plug"></i>Others</a>
-                </li>
-                <li>
-                  <a href="/it/search/set"
-                    ><i class="fa fa-plus" aria-hidden="true"></i>Add Set</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#"
-                ><i class="fa fa-headphones"></i>Delivero Headsets
-                <span class="fa arrow"></span
-              ></a>
-              <ul class="nav nav-second-level">
-                <li>
-                  <a href="/it/del/headsets"
-                    ><i class="fa fa-headphones"></i>Headsets</a
-                  >
-                </li>
-                <li>
-                  <a href="/it/del/add/headsets"><i class="fa fa-plus"></i>Add Headset</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="/it/hrs/trace"
-                ><i class="fa fa-list-ol"></i>Trace Requests
+              <a class="active-menu" href="/receptionist/procesverbal"
+                ><i class="fa fa-upload"></i>Upload Proces Verbal
               </a>
             </li>
             <li>
-              <a href="/it/hrs/request"
-                ><i class="fa fa-bullhorn"></i>HR Requests
+              <a href="/receptionist/ready/requests"
+                ><i class="fa fa-list-ol"></i>Ready PC
               </a>
             </li>
             <li>
-              <a href="/it/change_password"
+              <a href="/receptionist/change_password"
                 ><i class="fa fa-key" aria-hidden="true"></i>Change Password</a
               >
             </li>
@@ -174,15 +116,14 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">Others</h1>
+              <h1 class="page-head-line">Request History</h1>
               <h1 class="page-subhead-line">
-                Here you can view, edit and delete  all the other inventory items.
+                Here you can trace all the requests that have been made by the
+                HR department.
               </h1>
             </div>
           </div>
-          <!-- /. ROW  -->
           <hr />
-          <!-- load html -->
           <div class="loader" id="loader" style="display: none">
             <div class="loader-inner">
               <div class="loader-square"></div>
@@ -197,7 +138,6 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <!-- Advanced Tables -->
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -207,41 +147,67 @@
                     >
                       <thead>
                         <tr>
+                          <th>ID</th>
+                          <th>Fushata</th>
+                          <th>Status</th>
+                          <th>Operator ID</th>
+                          <th>Computer SN</th>
+                          <th>Monitor SN</th>
+                          <th>Headset ID</th>
                           <th>Other ID</th>
-                          <th>Mouse</th>
-                          <th>Keyboard</th>
-                          <th>Display or VGA</th>
-                          <th>AC Adapter</th>
-                          <th>Lan Cable</th>
-                          <th>Actions</th>
+                          <th>IT ID</th>
+                          <th>Proces-Verbal</th>
+                          <th>Upload</th>
+                          <th>Close Case</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for other in others %}
+                        {% for pc_action in pc_actions %}
                         <tr class="odd gradeX">
-                          <td>{{other.other_id}}</td>
-                          <td>{{other.mouse}}</td>
-                          <td>{{other.keyboard}}</td>
-                          <td>{{other.dp_vga}}</td>
-                          <td>{{other.ac}}</td>
-                          <td>{{other.lan}}</td>
+                          <td>{{pc_action.pc_action_id}}</td>
+                          <td>{{pc_action.fushata}}</td>
                           <td>
+                            {% if pc_action.statusi == 'active' %}
+                            <span class="label label-success">Active</span>
+                            {% else%}
+                            <span class="label label-danger">Closed</span>
+                            {% endif %}
+                          </td>
+                          <td>{{pc_action.hr_id}}</td>
+                          <td>{{pc_action.computer_sn}}</td>
+                          <td>{{pc_action.monitor_sn}}</td>
+                          <td>{{pc_action.headset_id}}</td>
+                          <td>{{pc_action.other_id}}</td>
+                          <td>{{pc_action.user_id}}</td>
+                          <td
+                            style="display: flex; justify-content: space-around"
+                          >
                             <a
-                              href="/it/others/edit/{{other.other_id}}"
-                              class="btn btn-primary"
-                              ><i class="fa fa-pencil" aria-hidden="true"></i
+                              href="/procesverbal/dorzim/{{pc_action.pc_action_id}}"
+                              class="btn btn-success"
+                              ><i class="fa fa-check" aria-hidden="true"></i
                             ></a>
                             <a
-                              href="javascript:void(0);"
+                              href="/procesverbal/rikthim/{{pc_action.pc_action_id}}"
                               class="btn btn-danger"
-                              onclick="openDeleteModal('{{other.other_id}}')"
-                            >
-                              <i
-                                class="fa fa-times-circle"
-                                aria-hidden="true"
-                              ></i>
+                              ><i class="fa fa-retweet" aria-hidden="true"></i>
                             </a>
                           </td>
+                          <td>
+                            <button
+                              class="btn btn-primary"
+                              onclick="openUploadModal('{{pc_action.pc_action_id}}')"
+                            >
+                              <i class="fa fa-upload" aria-hidden="true"></i>
+                              Upload PDF
+                            </button>
+                          </td>
+                          <td style="display: flex; justify-content: space-around" >
+                            <a
+                              href="/receptionist/close/{{pc_action.pc_action_id}}"
+                              class="btn btn-danger"
+                              ><i class="fa fa-times-circle-o" aria-hidden="true"></i
+                            ></a>
                         </tr>
                         {% endfor %}
                       </tbody>
@@ -249,29 +215,60 @@
                   </div>
                 </div>
               </div>
-              <!--End Advanced Tables -->
             </div>
           </div>
-          <!-- /. ROW  -->
-          <div class="card" id="deleteModal" data-serial-nr="">
+          <!-- Modal Overlay -->
+          <!-- Modal Overlay for Upload -->
+          <div
+            class="modal-overlay upload-modal-overlay"
+            style="display: none"
+          ></div>
+
+          <!-- Upload PDF Modal -->
+          <div
+            class="card"
+            id="uploadPdfModal"
+            data-pc-id=""
+            style="display: none"
+          >
             <div class="card-content">
-              <p class="card-heading">Delete Monitor?</p>
+              <p class="card-heading">Upload PDF</p>
               <p class="card-description">
-                Are you sure you want to delete this Monitor?
+                Please upload the PDF for the selected request:
               </p>
-            </div>
-            <div class="card-button-wrapper">
-              <button
-                class="card-button secondary"
-                onclick="closeDeleteModal()"
+              <!-- Form to upload PDF -->
+              <form
+                action="/receptionist/procesverbal"
+                method="POST"
+                enctype="multipart/form-data"
               >
-                Cancel
-              </button>
-              <button class="card-button primary" id="confirmDeleteButton">
-                Delete
-              </button>
+                <input
+                  type="hidden"
+                  name="pc_action_id"
+                  id="pcActionId"
+                  value=""
+                />
+                <input
+                  type="file"
+                  name="pdf_file"
+                  accept="application/pdf"
+                  required
+                />
+                <div class="card-button-wrapper">
+                  <button
+                    class="card-button secondary"
+                    type="button"
+                    onclick="closeUploadModal()"
+                  >
+                    Cancel
+                  </button>
+                  <button class="card-button primary" type="submit">
+                    Upload
+                  </button>
+                </div>
+              </form>
             </div>
-            <button class="exit-button" onclick="closeDeleteModal()">
+            <button class="exit-button" onclick="closeUploadModal()">
               <svg height="20px" viewBox="0 0 384 512">
                 <path
                   d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
@@ -281,17 +278,11 @@
           </div>
         </div>
       </div>
-      <!-- /. PAGE INNER  -->
     </div>
-    <!-- /. PAGE WRAPPER  -->
-    <!-- /. WRAPPER  -->
     <div id="footer-sec">
       &copy; 2024 Konecta | Design By :
       <a href="" target="_blank">Flori Bica</a>
     </div>
-    <!-- /. FOOTER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
     <script src="../../static/assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="../../static/assets/js/bootstrap.js"></script>
@@ -299,17 +290,13 @@
     <script src="../../static/assets/js/jquery.metisMenu.js"></script>
     <!-- CUSTOM SCRIPTS -->
     <script src="../../static/assets/js/custom.js"></script>
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
+    <!-- SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
     <script src="../../../static/assets/js/table/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
     <script src="../../../static/assets/js/table/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
     <script src="../../../static/assets/js/table/dataTables/jquery.dataTables.js"></script>
     <script src="../../../static/assets/js/table/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../../../static/js/it/inventory/other_modal.js"></script>
+    <script src="../../static/js/receptionist/upload_modal.js"></script>
     <script>
       $(document).ready(function () {
         $("#dataTables-example").dataTable();

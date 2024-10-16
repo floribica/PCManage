@@ -188,12 +188,12 @@
                             <span class="label label-danger">ERROR</span>
                             {% endif %}
                           </td>
-                          <td>{{ request.created_at.strftime('%Y-%m-%d') }}</td>
+                          <td>{{ request.created_at.strftime('%d/%m/%Y') }}</td>
                           {% if not request.authorization_date %}
                           <td>Not Authorizate</td>
                           {% else %}
                           <td>
-                            {{request.authorization_date.strftime('%Y-%m-%d')}}
+                            {{request.authorization_date.strftime('%d/%m/%Y')}}
                           </td>
                           {% endif %}
                           <td>{{request.fushata}}</td>

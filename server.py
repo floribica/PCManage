@@ -43,6 +43,12 @@ from application.controllers.planning import (
     change_password,
     confirm_request
 )
+from application.controllers.receptionist import (
+    dashboard,
+    trace_requests,
+    change_password,
+    upload_procesverbal
+)
 
 
 load_dotenv()

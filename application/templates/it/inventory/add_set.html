@@ -206,205 +206,134 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
-              <div class="center-form">
-                <form class="form" action="/it/add/set" method="post">
-                  {% with messages =
-                  get_flashed_messages(category_filter=["add_set"]) %} {% if
-                  messages %} {% for message in messages %}
-                  <p class="text-danger text-center">{{ message }}</p>
-                  {% endfor %} {% endif %} {% endwith %}
-
-                  <span class="input-span">
-                    <label for="hr_id" class="label"><h4>Choose Operator</h4></label>
-                    <select name="hr_id" id="hr_id" class="custom-select">
-                      {% for hr in hrs %}
-                      <option value="{{hr.hr_id}}">
-                        {{hr.first_name}} {{hr.last_name}}
-                      </option>
-                      {% endfor %}
-                    </select>
-                  </span>
-
-                  <span class="input-span">
-                    <label for="serial_nr" class="label">Serial Number</label>
-                    <input
-                      type="text"
-                      name="serial_nr"
-                      id="serial_nr"
-                      value="{{computer.serial_nr}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="pc_model" class="label">Computer Model</label>
-                    <input
-                      type="text"
-                      name="pc_model"
-                      id="pc_model"
-                      value="{{computer.model}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="cpu" class="label">CPU Model</label>
-                    <input
-                      type="text"
-                      name="cpu"
-                      id="cpu"
-                      value="{{computer.cpu}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="ram" class="label">RAM Size</label>
-                    <input
-                      type="text"
-                      name="ram"
-                      id="ram"
-                      value="{{computer.ram}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="storage_type" class="label">Storage Type</label>
-                    <input
-                      type="text"
-                      name="storage_type"
-                      id="storage_type"
-                      value="{{computer.storage_type}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="storage_value" class="label"
-                      >Storage Value</label
-                    >
-                    <input
-                      type="text"
-                      name="storage_value"
-                      id="storage_value"
-                      value="{{computer.storage_value}}"
-                    />
-                  </span>
-
-                  <!-- Monitor fields -->
-                  <span class="input-span">
-                    <label for="monitor_model" class="label"
-                      >Monitor Model</label
-                    >
-                    <input
-                      type="text"
-                      name="monitor_model"
-                      id="monitor_model"
-                      value="{{monitor.model}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="monitor_sn" class="label"
-                      >Monitor Serial Number</label
-                    >
-                    <input
-                      type="text"
-                      name="monitor_sn"
-                      id="monitor_sn"
-                      value="{{monitor.monitor_sn}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="size" class="label">Monitor Size</label>
-                    <input
-                      type="text"
-                      name="size"
-                      id="size"
-                      value="{{monitor.size}}"
-                    />
-                  </span>
-
-                  <!-- Headset fields -->
-                  <span class="input-span">
-                    <label for="adapter_model" class="label"
-                      >Adapter Model</label
-                    >
-                    <input
-                      type="text"
-                      name="adapter_model"
-                      id="adapter_model"
-                      value="{{headset.adapter_model}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="adapter_sn" class="label"
-                      >Adapter Serial Number</label
-                    >
-                    <input
-                      type="text"
-                      name="adapter_sn"
-                      id="adapter_sn"
-                      value="{{headset.adapter_sn}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="headset_model" class="label"
-                      >Headset Model</label
-                    >
-                    <input
-                      type="text"
-                      name="headset_model"
-                      id="headset_model"
-                      value="{{headset.headset_model}}"
-                    />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="headset_sn" class="label"
-                      >Headset Serial Number</label
-                    >
-                    <input
-                      type="text"
-                      name="headset_sn"
-                      id="headset_sn"
-                      value="{{headset.headset_sn}}"
-                    />
-                  </span>
-
-                  <!-- Additional fields -->
-                  <span class="input-span">
-                    <label for="mouse" class="label">Mouse</label>
-                    <input type="text" name="mouse" id="mouse" />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="keyboard" class="label">Keyboard</label>
-                    <input type="text" name="keyboard" id="keyboard" />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="dp_vga" class="label">DP or VGA</label>
-                    <input type="text" name="dp_vga" id="dp_vga" />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="ac" class="label">AC Adapter</label>
-                    <input type="text" name="ac" id="ac" />
-                  </span>
-
-                  <span class="input-span">
-                    <label for="lan" class="label">Lan</label>
-                    <input type="text" name="lan" id="lan" />
-                  </span>
-
-                  <br />
-                  <input class="submit" type="submit" value="Save" />
-                </form>
+            <!-- Part 1: Computer -->
+            <div class="col-md-4 col-sm-12">
+              <div class="form-section">
+                <h4>Computer Information</h4>
+                <span class="input-span">
+                  <label for="hr_id" class="label">Choose Operator</label>
+                  <select name="hr_id" id="hr_id" class="custom-select">
+                    {% for hr in hrs %}
+                    <option value="{{hr.hr_id}}">
+                      {{hr.first_name}} {{hr.last_name}}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </span>
+          
+                <span class="input-span">
+                  <label for="serial_nr" class="label">Serial Number</label>
+                  <input type="text" name="serial_nr" id="serial_nr" value="{{computer.serial_nr}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="pc_model" class="label">Computer Model</label>
+                  <input type="text" name="pc_model" id="pc_model" value="{{computer.model}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="cpu" class="label">CPU Model</label>
+                  <input type="text" name="cpu" id="cpu" value="{{computer.cpu}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="ram" class="label">RAM Size</label>
+                  <input type="text" name="ram" id="ram" value="{{computer.ram}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="storage_type" class="label">Storage Type</label>
+                  <input type="text" name="storage_type" id="storage_type" value="{{computer.storage_type}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="storage_value" class="label">Storage Value</label>
+                  <input type="text" name="storage_value" id="storage_value" value="{{computer.storage_value}}" />
+                </span>
+              </div>
+            </div>
+          
+            <!-- Part 2: Monitor -->
+            <div class="col-md-4 col-sm-12">
+              <div class="form-section">
+                <h4>Monitor Information</h4>
+                <span class="input-span">
+                  <label for="monitor_model" class="label">Monitor Model</label>
+                  <input type="text" name="monitor_model" id="monitor_model" value="{{monitor.model}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="monitor_sn" class="label">Monitor Serial Number</label>
+                  <input type="text" name="monitor_sn" id="monitor_sn" value="{{monitor.monitor_sn}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="size" class="label">Monitor Size</label>
+                  <input type="text" name="size" id="size" value="{{monitor.size}}" />
+                </span>
+              </div>
+            </div>
+          
+            <!-- Part 3: Headset and Accessories -->
+            <div class="col-md-4 col-sm-12">
+              <div class="form-section">
+                <h4>Headset and Accessories</h4>
+                <span class="input-span">
+                  <label for="adapter_model" class="label">Adapter Model</label>
+                  <input type="text" name="adapter_model" id="adapter_model" value="{{headset.adapter_model}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="adapter_sn" class="label">Adapter Serial Number</label>
+                  <input type="text" name="adapter_sn" id="adapter_sn" value="{{headset.adapter_sn}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="headset_model" class="label">Headset Model</label>
+                  <input type="text" name="headset_model" id="headset_model" value="{{headset.headset_model}}" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="headset_sn" class="label">Headset Serial Number</label>
+                  <input type="text" name="headset_sn" id="headset_sn" value="{{headset.headset_sn}}" />
+                </span>
+          
+                <!-- Additional Accessories -->
+                <span class="input-span">
+                  <label for="mouse" class="label">Mouse</label>
+                  <input type="text" name="mouse" id="mouse" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="keyboard" class="label">Keyboard</label>
+                  <input type="text" name="keyboard" id="keyboard" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="dp_vga" class="label">DP or VGA</label>
+                  <input type="text" name="dp_vga" id="dp_vga" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="ac" class="label">AC Adapter</label>
+                  <input type="text" name="ac" id="ac" />
+                </span>
+          
+                <span class="input-span">
+                  <label for="lan" class="label">LAN</label>
+                  <input type="text" name="lan" id="lan" />
+                </span>
               </div>
             </div>
           </div>
-          <!-- /. ROW  -->
+          
+          <br />
+          <div class="text-center">
+            <input class="submit" type="submit" value="Save" />
+          </div>
+          <!-- /. ROW -->
+          
+          
         </div>
       </div>
       <!-- /. PAGE INNER  -->

@@ -66,8 +66,8 @@ class Hrs:
         FROM hrs
         JOIN trace_date
         ON hrs.trace_date_id = trace_date.trace_date_id
-        WHERE statusi = 'request'
-        OR statusi = 'approved';
+        WHERE (statusi = 'request'
+        OR statusi = 'approved') AND authorization_date IS NULL;
         """
         results = connectToMySQL(cls.db_name).query_db(query)
         requests = []
@@ -87,6 +87,25 @@ class Hrs:
         JOIN trace_date
         ON hrs.trace_date_id = trace_date.trace_date_id
         WHERE statusi = 'approved';
+        """
+        results = connectToMySQL(cls.db_name).query_db(query)
+        requests = []
+        if results:
+            for request in results:
+                requests.append(request)
+        return requests
+    
+    
+    @classmethod
+    def get_all_ready_requests_trace(cls):
+        query = """
+        SELECT
+            hrs.*,
+            trace_date.authorization_date
+        FROM hrs
+        JOIN trace_date
+        ON hrs.trace_date_id = trace_date.trace_date_id
+        WHERE statusi = 'ready';
         """
         results = connectToMySQL(cls.db_name).query_db(query)
         requests = []

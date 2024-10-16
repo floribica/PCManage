@@ -72,3 +72,13 @@ class PC_Action:
             return results[0]
         return None
     
+    
+    @classmethod
+    def close_case(cls, data):
+        query = """
+            UPDATE pc_action
+            SET statusi = 'closed'
+            WHERE pc_action_id = %(pc_action_id)s;
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    

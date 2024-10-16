@@ -24,25 +24,31 @@ def procesverbal():
 def procesverbal_dorzim(pc_action_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "receptionist"]:
         return redirect("/login")
     
     procesverbal_data = PC_Action.procesverbal_data({"pc_action_id": pc_action_id})
     title = "Dorezim Mjetesh"
     PDFGenerator.generate_procesverbal_pdf(procesverbal_data, title)
     
-    return redirect("/procesverbal")
+    if session["user"]["role"] == "it":
+        return redirect("/procesverbal")
+    else:
+        return redirect("/receptionist/procesverbal")
 
 
 @app.route('/procesverbal/rikthim/<int:pc_action_id>')
 def procesverbal_rikthim(pc_action_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "receptionist"]:
         return redirect("/login")
     
     procesverbal_data = PC_Action.procesverbal_data({"pc_action_id": pc_action_id})
     title = "Rikthim Mjetesh"
     PDFGenerator.generate_procesverbal_pdf(procesverbal_data, title)
     
-    return redirect("/procesverbal")
+    if session["user"]["role"] == "it":
+        return redirect("/procesverbal")
+    else:
+        return redirect("/receptionist/procesverbal")
