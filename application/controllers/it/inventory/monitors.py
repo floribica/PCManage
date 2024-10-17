@@ -12,9 +12,13 @@ def inventory_monitors():
         return redirect("/login")
     
     monitors = Monitor.get_all_monitors()
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     return render_template(
         "it/inventory/monitors.html",
-        monitors = monitors
+        monitors = monitors,
+        full_name=full_name
     )
     
 
@@ -37,11 +41,15 @@ def inventory_monitor_edit(monitor_sn):
         return redirect("/it/monitors")
     
     monitor = Monitor.get_monitor_by_id({"monitor_sn": monitor_sn})
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     if not monitor:
         return redirect("/it/monitors")
     return render_template(
         "it/inventory/edit/monitor.html",
-        monitor = monitor
+        monitor = monitor,
+        full_name=full_name
     )
 
 

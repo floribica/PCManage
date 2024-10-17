@@ -88,6 +88,9 @@ def inventory_pc_search_set():
         return redirect("/login")
     if not session["user"]["role"] == "it":
         return redirect("/login")
+    
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
 
     if request.method == "POST":
         search_data = {
@@ -130,7 +133,11 @@ def inventory_pc_search_set():
             hrs = hrs,
             computer = computer,
             monitor = monitor,
-            headset = headset
+            headset = headset,
+            full_name=full_name
         )
 
-    return render_template("it/inventory/search_set.html")
+    return render_template(
+        "it/inventory/search_set.html",
+        full_name=full_name
+    )

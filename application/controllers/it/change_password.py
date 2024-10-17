@@ -35,4 +35,10 @@ def it_change_password():
     if session['user']['role'] != 'it':
         return redirect('/')
     
-    return render_template('it/change_password.html')
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
+    return render_template(
+        'it/change_password.html',
+        full_name=full_name
+    )

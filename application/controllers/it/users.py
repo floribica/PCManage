@@ -15,10 +15,13 @@ def it_users():
         return redirect("/login")
     
     users = User.get_all_users()
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     
     return render_template(
         'it/users.html',
-        users = users
+        users = users,
+        full_name=full_name
     )
     
     

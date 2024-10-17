@@ -12,10 +12,14 @@ def del_headset():
     if not session["user"]["role"] == "it":
         return redirect("/login")
     
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     headsets = Del_Headset.get_all_del_headsets()
     return render_template(
         "it/del_headsets/headsets.html",
-        headsets = headsets
+        headsets = headsets,
+        full_name=full_name
     )
     
 

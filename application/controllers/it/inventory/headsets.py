@@ -12,9 +12,13 @@ def inventory_headset():
         return redirect("/login")
     
     headsets = Headset.get_all_headsets()
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     return render_template(
         "it/inventory/headsets.html",
-        headsets = headsets
+        headsets = headsets,
+        full_name=full_name
     )
     
 
@@ -39,11 +43,15 @@ def inventory_headset_edit(headset_id):
         return redirect("/it/headsets")
     
     headset = Headset.get_headset_by_id({"headset_id": headset_id})
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     if not headset:
         return redirect("/it/headsets")
     return render_template(
         "it/inventory/edit/headset.html",
-        headset = headset
+        headset = headset,
+        full_name=full_name
     )
 
 

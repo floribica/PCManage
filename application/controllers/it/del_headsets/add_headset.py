@@ -11,6 +11,8 @@ def add_del_headset():
         return redirect("/login")
     if not session["user"]["role"] == "it":
         return redirect("/login")
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     
     if request.method == "POST":
         headser_data = {
@@ -25,4 +27,7 @@ def add_del_headset():
         Del_Headset.add_del_headset(headser_data)
         return redirect("/it/del/add/headsets")
     
-    return render_template("it/del_headsets/add_headset.html")
+    return render_template(
+        "it/del_headsets/add_headset.html",
+        full_name=full_name
+    )

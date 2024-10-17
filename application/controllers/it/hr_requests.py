@@ -14,10 +14,13 @@ def it_applicattion_hrs():
         return redirect("/login")
     
     requests = Hrs.get_all_requests()
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     
     return render_template(
         'it/hr_requests.html',
-        requests = requests
+        requests = requests,
+        full_name=full_name
     )
 
 

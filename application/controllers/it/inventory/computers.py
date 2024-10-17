@@ -12,9 +12,13 @@ def inventory_pc():
         return redirect("/login")
     
     computers = Computer.get_all_computers()
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     return render_template(
         "it/inventory/computers.html",
-        computers = computers
+        computers = computers,
+        full_name=full_name
     )
 
 
@@ -41,11 +45,15 @@ def inventory_pc_edit(serial_nr):
         return redirect("/it/computers")
     
     computer = Computer.get_computer_by_serial_nr({"serial_nr": serial_nr})
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     if not computer:
         return redirect("/it/computers")
     return render_template(
         "it/inventory/edit/computer.html",
-        computer = computer
+        computer = computer,
+        full_name=full_name
     )
 
 

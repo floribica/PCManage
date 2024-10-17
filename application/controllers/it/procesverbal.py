@@ -12,11 +12,14 @@ def procesverbal():
     if not session["user"]["role"] == "it":
         return redirect("/login")
     
-    pc_actions = PC_Action.get_all_pc_actions() 
+    pc_actions = PC_Action.get_all_pc_actions()
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     
     return render_template(
         "it/procesverbal.html",
-        pc_actions = pc_actions
+        pc_actions = pc_actions,
+        full_name=full_name
     )
 
 

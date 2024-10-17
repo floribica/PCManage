@@ -10,11 +10,14 @@ def inventory_other():
         return redirect("/login")
     if not session["user"]["role"] == "it":
         return redirect("/login")
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     
     others = Other.get_all_others()
     return render_template(
         "it/inventory/others.html",
-        others = others
+        others = others,
+        full_name=full_name
     )
 
 
@@ -39,11 +42,15 @@ def inventory_other_edit(other_id):
         return redirect("/it/others")
     
     other = Other.get_other_by_id({"other_id": other_id})
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    
     if not other:
         return redirect("/it/others")
     return render_template(
         "it/inventory/edit/other.html",
-        other = other
+        other = other,
+        full_name=full_name
     )
 
 
