@@ -4,6 +4,7 @@ from flask import flash, render_template, redirect, session
 from application import app
 from application.helpers.password import generate_password
 from application.helpers.send_email import password_email, send_email
+from application.models.hrs import Hrs
 from application.models.user import User
 
 
@@ -17,11 +18,13 @@ def it_users():
     users = User.get_all_users()
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         'it/users.html',
         users = users,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
     
     

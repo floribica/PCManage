@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, session
 
 from application import app
 from application.models.computer import Computer
+from application.models.hrs import Hrs
 
 
 @app.route("/it/computers")
@@ -14,11 +15,13 @@ def inventory_pc():
     computers = Computer.get_all_computers()
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         "it/inventory/computers.html",
         computers = computers,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 
@@ -47,13 +50,14 @@ def inventory_pc_edit(serial_nr):
     computer = Computer.get_computer_by_serial_nr({"serial_nr": serial_nr})
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
-    
+    total_reuest = Hrs.total_request()
     if not computer:
         return redirect("/it/computers")
     return render_template(
         "it/inventory/edit/computer.html",
         computer = computer,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 

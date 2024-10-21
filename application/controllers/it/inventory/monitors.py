@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, session
 
 from application import app
+from application.models.hrs import Hrs
 from application.models.monitor import Monitor
 
 
@@ -14,11 +15,13 @@ def inventory_monitors():
     monitors = Monitor.get_all_monitors()
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         "it/inventory/monitors.html",
         monitors = monitors,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
     
 
@@ -43,13 +46,15 @@ def inventory_monitor_edit(monitor_sn):
     monitor = Monitor.get_monitor_by_id({"monitor_sn": monitor_sn})
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     if not monitor:
         return redirect("/it/monitors")
     return render_template(
         "it/inventory/edit/monitor.html",
         monitor = monitor,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 

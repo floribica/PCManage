@@ -16,11 +16,13 @@ def it_trace_applicattion_hrs():
     requests = Hrs.get_all_requests_trace()
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         'it/trace_requests.html',
         requests = requests,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 

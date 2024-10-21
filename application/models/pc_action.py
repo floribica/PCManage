@@ -82,3 +82,20 @@ class PC_Action:
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
     
+    
+    
+    @classmethod
+    def count_pc_action_by_month(cls):
+        query = """
+            SELECT
+                COUNT(pc_action_id) AS total_pc_action,
+                MONTHNAME(created_date) AS month
+            FROM pc_action
+            WHERE YEAR(created_date) = YEAR(CURDATE())
+            GROUP BY month;
+        """
+        result = connectToMySQL(DB_NAME).query_db(query)
+        if result:
+            return result
+        return None
+    

@@ -91,6 +91,7 @@ def inventory_pc_search_set():
     
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
 
     if request.method == "POST":
         search_data = {
@@ -134,10 +135,12 @@ def inventory_pc_search_set():
             computer = computer,
             monitor = monitor,
             headset = headset,
-            full_name=full_name
+            full_name=full_name,
+            total_reuest=total_reuest
         )
 
     return render_template(
         "it/inventory/search_set.html",
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )

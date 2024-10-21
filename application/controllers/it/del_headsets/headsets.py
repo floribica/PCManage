@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, session
 
 from application import app
 from application.models.del_headset import Del_Headset
+from application.models.hrs import Hrs
 
 
 
@@ -14,12 +15,14 @@ def del_headset():
     
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     headsets = Del_Headset.get_all_del_headsets()
     return render_template(
         "it/del_headsets/headsets.html",
         headsets = headsets,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
     
 

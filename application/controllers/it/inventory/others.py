@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, session
 
 from application import app
+from application.models.hrs import Hrs
 from application.models.other import Other
 
 
@@ -12,12 +13,13 @@ def inventory_other():
         return redirect("/login")
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
-    
+    total_reuest = Hrs.total_request()
     others = Other.get_all_others()
     return render_template(
         "it/inventory/others.html",
         others = others,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 
@@ -44,13 +46,15 @@ def inventory_other_edit(other_id):
     other = Other.get_other_by_id({"other_id": other_id})
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     if not other:
         return redirect("/it/others")
     return render_template(
         "it/inventory/edit/other.html",
         other = other,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 

@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, session
 
 from application import app
 from application.helpers.procesverbal_pdf import PDFGenerator
+from application.models.hrs import Hrs
 from application.models.pc_action import PC_Action
 
 
@@ -15,11 +16,13 @@ def procesverbal():
     pc_actions = PC_Action.get_all_pc_actions()
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         "it/procesverbal.html",
         pc_actions = pc_actions,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 

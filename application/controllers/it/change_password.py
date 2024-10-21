@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, session
 
 from application import app
 from application.helpers.password import generate_password
+from application.models.hrs import Hrs
 from application.models.user import User
 
 
@@ -37,8 +38,10 @@ def it_change_password():
     
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         'it/change_password.html',
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )

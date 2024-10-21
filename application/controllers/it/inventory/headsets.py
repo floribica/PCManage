@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, session
 
 from application import app
 from application.models.headset import Headset
+from application.models.hrs import Hrs
 
 
 @app.route("/it/headsets")
@@ -14,11 +15,13 @@ def inventory_headset():
     headsets = Headset.get_all_headsets()
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     return render_template(
         "it/inventory/headsets.html",
         headsets = headsets,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
     
 
@@ -45,13 +48,15 @@ def inventory_headset_edit(headset_id):
     headset = Headset.get_headset_by_id({"headset_id": headset_id})
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     
     if not headset:
         return redirect("/it/headsets")
     return render_template(
         "it/inventory/edit/headset.html",
         headset = headset,
-        full_name=full_name
+        full_name=full_name,
+        total_reuest=total_reuest
     )
 
 

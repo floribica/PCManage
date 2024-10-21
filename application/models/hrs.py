@@ -220,6 +220,36 @@ class Hrs:
         return connectToMySQL(cls.db_name).query_db(query, data)
     
     
+    @classmethod
+    def count_hrs_by_month(cls):
+        query = """
+            SELECT
+                COUNT(hr_id) AS total_reuest,
+                MONTHNAME(created_at) AS month
+            FROM hrs
+            WHERE YEAR(created_at) = YEAR(CURDATE())
+            GROUP BY month;
+        """
+        result = connectToMySQL(DB_NAME).query_db(query)
+        if result:
+            return result
+        return None
+    
+    
+    @classmethod
+    def total_request(cls):
+        query = """
+            SELECT
+                COUNT(hr_id) AS total_request
+            FROM hrs
+            WHERE statusi = 'request';
+        """
+        result = connectToMySQL(DB_NAME).query_db(query)
+        if result:
+            return result[0]
+        return None
+    
+    
     @staticmethod
     def validate_add_request(data):
         is_valid = True
