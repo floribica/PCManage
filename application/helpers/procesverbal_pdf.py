@@ -42,8 +42,7 @@ class PDFGenerator:
         )
 
         # Create a timestamped file name
-        date = datetime.now().strftime("%Y%m%d%H%M%S")
-        file_name = f"{pdf_title}_{data['first_name']}_{data['last_name']}_{date}.pdf"
+        file_name = f"{pdf_title}_{data['first_name']}.pdf"
 
         # Define the Downloads folder
         home_dir = os.path.expanduser("~")
