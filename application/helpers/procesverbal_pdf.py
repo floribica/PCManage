@@ -12,6 +12,8 @@ class PDFGenerator:
         # Render the HTML template
         date = datetime.now().strftime("%d/%m/%Y")
         time = datetime.now().strftime("%H:%M")
+        split_name = data.get('username', '__________').split('.')
+        employer_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
         rendered_html = render_template(
             'pdf/procesverbal_dorzim.html',
             pdf_title=pdf_title.upper(),
@@ -35,7 +37,7 @@ class PDFGenerator:
             dp_vga=data.get('dp_vga', '__________').upper(),
             ac=data.get('ac', '__________').upper(),
             lan=data.get('lan', '__________').upper(),
-            employer_name=data.get('username', '__________').upper(),
+            employer_name=employer_name,
             employee_name=f"{data['first_name'].upper()} {data['last_name'].upper()}"
         )
 
@@ -58,4 +60,4 @@ class PDFGenerator:
         pdfkit.from_string(rendered_html, pdf_file_path)
 
         # Serve the file for download
-        return send_file(pdf_file_path, as_attachment=True)
+        return send_file(pdf_file_path, as_attachment=False)
