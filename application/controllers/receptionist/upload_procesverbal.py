@@ -21,15 +21,18 @@ def allowed_file(filename):
 def receptionist_procesverbal():
     if "user" not in session:
         return redirect("/login")
-    if session["user"]["role"] != "receptionist":
+    if session["user"]["role"] not in ["admin", "receptionist"]:
         return redirect("/login")
     
     # Get all PC actions to display in the table
     pc_actions = PC_Action.get_all_pc_actions()
     
     # Create the full name from the username in the session
-    split_name = session['user']["username"].split(".")
-    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    if session["user"]["role"] == "admin":
+        full_name = session['user']["username"].capitalize()
+    else:
+        split_name = session['user']["username"].split(".")
+        full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     
     # Handle the PDF upload if the request method is POST
     if request.method == 'POST':
@@ -65,6 +68,12 @@ def receptionist_procesverbal():
         return redirect(request.url)
     
     # Render the template for receptionist with the list of PC actions
+    if session["user"]["role"] == "admin":
+        return render_template(
+            "admin/procesverbal.html",
+            pc_actions=pc_actions,
+            full_name=full_name
+        )
     return render_template(
         "receptionist/upload_procesverbal.html",
         pc_actions=pc_actions,
@@ -80,7 +89,7 @@ if not os.path.exists(UPLOAD_FOLDER_PROCESSVERBAL):
 def receptionist_close_case(pc_action_id):
     if "user" not in session:
         return redirect("/login")
-    if session["user"]["role"] != "receptionist":
+    if session["user"]["role"] in ["admin", "receptionist"]:
         return redirect("/login")
     
     PC_Action.close_case({"pc_action_id": pc_action_id})

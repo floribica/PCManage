@@ -30,7 +30,7 @@ def procesverbal():
 def procesverbal_dorzim(pc_action_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] in ["it", "receptionist"]:
+    if not session["user"]["role"] in ["admin", "it", "receptionist"]:
         return redirect("/login")
     
     procesverbal_data = PC_Action.procesverbal_data({"pc_action_id": pc_action_id})
@@ -47,7 +47,7 @@ def procesverbal_dorzim(pc_action_id):
 def procesverbal_rikthim(pc_action_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] in ["it", "receptionist"]:
+    if not session["user"]["role"] in ["admin", "it", "receptionist"]:
         return redirect("/login")
     
     procesverbal_data = PC_Action.procesverbal_data({"pc_action_id": pc_action_id})

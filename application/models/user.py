@@ -20,6 +20,7 @@ class User:
         self.password = data['password']
         self.role = data['role']
         self.email = data['email']
+        self.statusi = data['statusi']
     
     
     @classmethod
@@ -44,7 +45,8 @@ class User:
             SELECT
                 *
             FROM users
-            WHERE user_id = %(user_id)s;
+            WHERE user_id = %(user_id)s
+            AND statusi = 1;
         """
         results = connectToMySQL(cls.db_name).query_db(query, data)
         if results:
@@ -58,7 +60,8 @@ class User:
             SELECT
                 *
             FROM users
-            WHERE username = %(username)s;
+            WHERE username = %(username)s
+            AND statusi = 1;
         """
         results = connectToMySQL(cls.db_name).query_db(query, data)
         if results:
@@ -82,7 +85,8 @@ class User:
             SELECT
                 *
             FROM users
-            WHERE username = %(username)s;
+            WHERE username = %(username)s
+            AND statusi = 1;
         """
         results = connectToMySQL(cls.db_name).query_db(query, data)
         if results:
@@ -97,7 +101,8 @@ class User:
             SET
                 password = %(password)s
             WHERE username = %(username)s
-            AND email = %(email)s;
+            AND email = %(email)s
+            AND statusi = 1;
         """
         connectToMySQL(cls.db_name).query_db(query, data)
     
@@ -109,9 +114,32 @@ class User:
             SET
                 password = %(password)s
             WHERE username = %(username)s
+            AND statusi = 1;
         """
         connectToMySQL(cls.db_name).query_db(query, data)
         
+    
+    @classmethod
+    def deactivate_user(cls, data):
+        query = """
+            UPDATE users
+            SET
+                statusi = 0
+            WHERE user_id = %(user_id)s;
+        """
+        connectToMySQL(cls.db_name).query_db(query, data)
+    
+    
+    @classmethod
+    def activate_user(cls, data):
+        query = """
+            UPDATE users
+            SET
+                statusi = 1
+            WHERE user_id = %(user_id)s;
+        """
+        connectToMySQL(cls.db_name).query_db(query, data)
+    
     
     @staticmethod
     def validate_register(data):

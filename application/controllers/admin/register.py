@@ -34,4 +34,4 @@ def register():
         return redirect('/')
     if session['user']['role'] != 'admin':
         return redirect('/')
-    return render_template('admin/register.html')
+    return render_template('admin/users/register.html')

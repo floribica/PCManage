@@ -9,6 +9,11 @@ from application.models.user import User
 
 @app.route('/it/change_password', methods=['GET', 'POST'])
 def it_change_password():
+    if 'user' not in session:
+        return redirect('/')
+    if session['user']['role'] not in ['it', 'admin']:
+        return redirect('/')
+    
     if request.method == 'POST':
         change_data = {
             'username': session['user']['username'],
@@ -30,11 +35,14 @@ def it_change_password():
         User.user_reser_password(change_data)
         
         return redirect('/it/change_password')
-
-    if 'user' not in session:
-        return redirect('/')
-    if session['user']['role'] != 'it':
-        return redirect('/')
+    
+    if session['user']['role'] == 'admin':
+        full_name = session['user']['username'].capitalize()
+        
+        return render_template(
+            'admin/change_password.html',
+            full_name=full_name
+        )
     
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()

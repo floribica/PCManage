@@ -10,10 +10,19 @@ from application.models.trace_date import Trace
 def it_trace_applicattion_hrs():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     requests = Hrs.get_all_requests_trace()
+    
+    if session["user"]["role"] == "admin":
+        full_name = session['user']['username'].capitalize()
+        return render_template(
+            'admin/request/trace_requests.html',
+            requests = requests,
+            full_name = full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
@@ -30,7 +39,7 @@ def it_trace_applicattion_hrs():
 def it_application_hrs_ready(hr_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     data = {
@@ -52,7 +61,7 @@ def it_application_hrs_ready(hr_id):
 def it_application_hrs_submitted(hr_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] in ["it", "receptionist"]:
+    if not session["user"]["role"] in ["it", "receptionist", "admin"]:
         return redirect("/login")
     
     data = {
@@ -77,7 +86,7 @@ def it_application_hrs_submitted(hr_id):
 def it_application_hrs_returned(hr_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     data = {

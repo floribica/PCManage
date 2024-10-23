@@ -9,8 +9,8 @@ from application.controllers.login import (
 )
 from application.controllers.admin import (
     dashboard,
-    register,
-    reset_password
+    manage_user,
+    register
 )
 from application.controllers.it import (
     dashboard,

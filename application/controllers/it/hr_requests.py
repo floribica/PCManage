@@ -10,10 +10,19 @@ from application.models.trace_date import Trace
 def it_applicattion_hrs():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     requests = Hrs.get_all_requests()
+    
+    if session["user"]["role"] == "admin":
+        full_name = session['user']['username'].capitalize()
+        return render_template(
+            'admin/request/hr_requests.html',
+            requests = requests,
+            full_name = full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
@@ -30,7 +39,7 @@ def it_applicattion_hrs():
 def approve_hrs_request(hr_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     data = {
@@ -52,7 +61,7 @@ def approve_hrs_request(hr_id):
 def cancel_hrs_request(hr_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     data = request.get_json()
