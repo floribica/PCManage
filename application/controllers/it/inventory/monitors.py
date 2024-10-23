@@ -9,10 +9,19 @@ from application.models.monitor import Monitor
 def inventory_monitors():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     monitors = Monitor.get_all_monitors()
+    
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        return render_template(
+            "admin/inventory/monitors.html",
+            monitors = monitors,
+            full_name = full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
@@ -29,7 +38,7 @@ def inventory_monitors():
 def inventory_monitor_edit(monitor_sn):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     if request.method == "POST":
@@ -44,12 +53,21 @@ def inventory_monitor_edit(monitor_sn):
         return redirect("/it/monitors")
     
     monitor = Monitor.get_monitor_by_id({"monitor_sn": monitor_sn})
+    if not monitor:
+        return redirect("/it/monitors")
+    
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        return render_template(
+            "admin/inventory/edit/monitor.html",
+            monitor = monitor,
+            full_name=full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
     
-    if not monitor:
-        return redirect("/it/monitors")
     return render_template(
         "it/inventory/edit/monitor.html",
         monitor = monitor,
@@ -62,7 +80,7 @@ def inventory_monitor_edit(monitor_sn):
 def inventory_monitor_delete(monitor_sn):
     if "user" not in session:
         return redirect("/login")
-    if session["user"]["role"] != "it":
+    if session["user"]["role"] not in ["it", "admin"]:
         return redirect("/login")
     if request.method == "DELETE":
         Monitor.delete_monitor({"monitor_sn": monitor_sn})

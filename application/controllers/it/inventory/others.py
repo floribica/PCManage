@@ -9,8 +9,18 @@ from application.models.other import Other
 def inventory_other():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
+    
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        others = Other.get_all_others()
+        return render_template(
+            "admin/inventory/others.html",
+            others = others,
+            full_name=full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
@@ -27,7 +37,7 @@ def inventory_other():
 def inventory_other_edit(other_id):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     if request.method == "POST":
         other_data = {
@@ -44,12 +54,21 @@ def inventory_other_edit(other_id):
         return redirect("/it/others")
     
     other = Other.get_other_by_id({"other_id": other_id})
+    if not other:
+        return redirect("/it/others")
+    
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        return render_template(
+            "admin/inventory/edit/other.html",
+            other = other,
+            full_name=full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
     
-    if not other:
-        return redirect("/it/others")
     return render_template(
         "it/inventory/edit/other.html",
         other = other,
@@ -62,7 +81,7 @@ def inventory_other_edit(other_id):
 def inventory_other_delete(other_id):
     if "user" not in session:
         return redirect("/login")
-    if session["user"]["role"] != "it":
+    if session["user"]["role"] not in ["it", "admin"]:
         return redirect("/login")
     if request.method == "DELETE":
         Other.delete_monitor({"other_id": other_id})

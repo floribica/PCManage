@@ -60,9 +60,6 @@
         </div>
 
         <div class="header-right">
-          <a href="/it/hrs/request" class="btn btn-info" title="New Message"
-            ><b>{{ total_reuest.total_request}} </b><i class="fa fa-envelope-o fa-2x"></i
-          ></a>
           <a href="/logout" class="btn btn-danger" title="Logout"
             ><i class="fa fa-exclamation-circle fa-2x"></i
           ></a>
@@ -85,19 +82,35 @@
                 </div>
               </div>
             </li>
-
             <li>
-              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
-            </li>
-            <li>
-              <a href="/users"><i class="fa fa-user"></i>Users</a>
-            </li>
-            <li>
-              <a href="/procesverbal"
-                ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
+              <a href="/"
+                ><i class="fa fa-dashboard"></i>Dashboard</a
               >
             </li>
             <li>
+              <a href="#"
+                ><i class="fa fa-plus-circle"></i>Users
+                <span class="fa arrow"></span
+              ></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="/admin/register"
+                    ><i class="fa fa-plus-circle"></i>Add New User</a
+                  >
+                </li>
+                <li>
+                  <a href="/users"
+                    ><i class="fa fa-unlock-alt"></i>Manage User</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/receptionist/procesverbal"
+                ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
+              >
+            </li>
+            <li class="open">
               <a href="#"
                 ><i class="fa fa-yelp"></i>Inventory
                 <span class="fa arrow"></span
@@ -119,7 +132,7 @@
                   >
                 </li>
                 <li>
-                  <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
+                  <a class="active-menu" href="/it/others"><i class="fa fa-plug"></i>Others</a>
                 </li>
                 <li>
                   <a href="/it/search/set"
@@ -128,14 +141,14 @@
                 </li>
               </ul>
             </li>
-            <li class="open">
+            <li>
               <a href="#"
                 ><i class="fa fa-headphones"></i>Deliveroo Headsets
                 <span class="fa arrow"></span
               ></a>
               <ul class="nav nav-second-level">
                 <li>
-                  <a class="active-menu" href="/it/del/headsets"
+                  <a href="/it/del/headsets"
                     ><i class="fa fa-headphones"></i>Headsets</a
                   >
                 </li>
@@ -147,19 +160,36 @@
               </ul>
             </li>
             <li>
-              <a href="/it/hrs/trace"
-                ><i class="fa fa-list-ol"></i>Trace Requests
-              </a>
-            </li>
-            <li>
-              <a href="/it/hrs/request"
-                ><i class="fa fa-bullhorn"></i>HR Requests
-              </a>
-            </li>
+              <a href="#"
+                ><i class="fa fa-folder"></i>Requests
+                <span class="fa arrow"></span
+              ></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="/it/hrs/trace"
+                    ><i class="fa fa-list-ol"></i>Trace Requests
+                  </a>
+                </li>
+                <li>
+                  <a href="/it/hrs/request"
+                    ><i class="fa fa-bullhorn"></i>HR Requests
+                  </a>
+                </li>
+                <li>
+                  <a href="/planning/confirm/requests"
+                    ><i class="fa fa-check-square-o"></i>Confirm Requests (Planning)
+                  </a>
+                </li>
+                <li>
+                  <a href="/recruiter/add/request"
+                    ><i class="fa fa-plus-circle"></i>Add Request (Recruiter)
+                  </a>
+                </li>
+              </ul>
+            </li>            
             <li>
               <a href="/it/change_password"
-                ><i class="fa fa-key" aria-hidden="true"></i>Change
-                Password</a
+                ><i class="fa fa-key" aria-hidden="true"></i>Change Password</a
               >
             </li>
             <li>
@@ -173,9 +203,9 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">Deliverooo Headset</h1>
+              <h1 class="page-head-line">Others</h1>
               <h1 class="page-subhead-line">
-                Here you can see all the headsets and their status.
+                Here you can view, edit and delete  all the other inventory items.
               </h1>
             </div>
           </div>
@@ -206,37 +236,42 @@
                     >
                       <thead>
                         <tr>
-                          <th>Headset Serial Number</th>
-                          <th>Operator Name</th>
-                          <th>IT Name</th>
-                          <td>Status</td>
+                          <th>Other ID</th>
+                          <th>Mouse</th>
+                          <th>Keyboard</th>
+                          <th>Display or VGA</th>
+                          <th>AC Adapter</th>
+                          <th>Lan Cable</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for headset in headsets %}
+                        {% for other in others %}
                         <tr class="odd gradeX">
-                          <td class="">{{headset.headset_sn}}</td>
-                          <td>{{headset.operator}}</td>
-                          <td>{{headset.it_name}}</td>
-                          <td class="center">
-                            {% if headset.statusi == 1 %}
-                            <span class="label label-success">Returned</span>
-                            {% else %}
-                            <span class="label label-danger">Not Returned</span>
-                            {% endif %}
-                          </td>
-                          <td style="display: flex; justify-content: center;">
-                            {% if headset.statusi == 0 %}
+                          <td>{{other.other_id}}</td>
+                          <td>{{other.mouse}}</td>
+                          <td>{{other.keyboard}}</td>
+                          <td>{{other.dp_vga}}</td>
+                          <td>{{other.ac}}</td>
+                          <td>{{other.lan}}</td>
+                          <td>
                             <a
-                              href="/it/del_headsets/return/{{headset.headset_sn}}"
-                              class="btn btn-success"
-                              ><i class="fa fa-check" aria-hidden="true"></i
+                              href="/it/others/edit/{{other.other_id}}"
+                              class="btn btn-primary"
+                              ><i class="fa fa-pencil" aria-hidden="true"></i
                             ></a>
-                            {% endif %}
+                            <a
+                              href="javascript:void(0);"
+                              class="btn btn-danger"
+                              onclick="openDeleteModal('{{other.other_id}}')"
+                            >
+                              <i
+                                class="fa fa-times-circle"
+                                aria-hidden="true"
+                              ></i>
+                            </a>
                           </td>
                         </tr>
-
                         {% endfor %}
                       </tbody>
                     </table>
@@ -249,9 +284,9 @@
           <!-- /. ROW  -->
           <div class="card" id="deleteModal" data-serial-nr="">
             <div class="card-content">
-              <p class="card-heading">Delete Headset?</p>
+              <p class="card-heading">Delete Monitor?</p>
               <p class="card-description">
-                Are you sure you want to delete this headset?
+                Are you sure you want to delete this Monitor?
               </p>
             </div>
             <div class="card-button-wrapper">
@@ -303,7 +338,7 @@
     <!-- DATA TABLE SCRIPTS -->
     <script src="../../../static/assets/js/table/dataTables/jquery.dataTables.js"></script>
     <script src="../../../static/assets/js/table/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../../../static/js/it/del_headset/headset_modal.js"></script>
+    <script src="../../../static/js/it/inventory/other_modal.js"></script>
     <script>
       $(document).ready(function () {
         $("#dataTables-example").dataTable();

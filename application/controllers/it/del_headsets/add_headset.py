@@ -10,11 +10,8 @@ from application.models.hrs import Hrs
 def add_del_headset():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
-    split_name = session['user']["username"].split(".")
-    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
-    total_reuest = Hrs.total_request()
     
     if request.method == "POST":
         headser_data = {
@@ -29,6 +26,16 @@ def add_del_headset():
         Del_Headset.add_del_headset(headser_data)
         return redirect("/it/del/add/headsets")
     
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        return render_template(
+            "admin/del_headsets/add_headset.html",
+            full_name=full_name
+        )
+    
+    split_name = session['user']["username"].split(".")
+    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    total_reuest = Hrs.total_request()
     return render_template(
         "it/del_headsets/add_headset.html",
         full_name=full_name,

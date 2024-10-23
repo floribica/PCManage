@@ -61,9 +61,6 @@
         </div>
 
         <div class="header-right">
-          <a href="/it/hrs/request" class="btn btn-info" title="New Message"
-            ><b>{{ total_reuest.total_request}} </b><i class="fa fa-envelope-o fa-2x"></i
-          ></a>
           <a href="/logout" class="btn btn-danger" title="Logout"
             ><i class="fa fa-exclamation-circle fa-2x"></i
           ></a>
@@ -86,17 +83,31 @@
                 </div>
               </div>
             </li>
-
             <li>
-              <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
-            </li>
-            <li>
-              <a href="/users"
-                ><i class="fa fa-user"></i>Users</a
+              <a href="/"
+                ><i class="fa fa-dashboard"></i>Dashboard</a
               >
             </li>
             <li>
-              <a href="/procesverbal"
+              <a href="#"
+                ><i class="fa fa-plus-circle"></i>Users
+                <span class="fa arrow"></span
+              ></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="/admin/register"
+                    ><i class="fa fa-plus-circle"></i>Add New User</a
+                  >
+                </li>
+                <li>
+                  <a href="/users"
+                    ><i class="fa fa-unlock-alt"></i>Manage User</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/receptionist/procesverbal"
                 ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
               >
             </li>
@@ -107,7 +118,7 @@
               ></a>
               <ul class="nav nav-second-level">
                 <li>
-                  <a class="active-menu" href="/it/computers"
+                  <a href="/it/computers"
                     ><i class="fa fa-laptop"></i>Computers</a
                   >
                 </li>
@@ -122,7 +133,7 @@
                   >
                 </li>
                 <li>
-                  <a href="/it/others"><i class="fa fa-plug"></i>Others</a>
+                  <a class="active-menu" href="/it/others"><i class="fa fa-plug"></i>Others</a>
                 </li>
                 <li>
                   <a href="/it/search/set"
@@ -150,19 +161,36 @@
               </ul>
             </li>
             <li>
-              <a href="/it/hrs/trace"
-                ><i class="fa fa-list-ol"></i>Trace Requests
-              </a>
-            </li>
-            <li>
-              <a href="/it/hrs/request"
-                ><i class="fa fa-bullhorn"></i>HR Requests
-              </a>
-            </li>
+              <a href="#"
+                ><i class="fa fa-folder"></i>Requests
+                <span class="fa arrow"></span
+              ></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="/it/hrs/trace"
+                    ><i class="fa fa-list-ol"></i>Trace Requests
+                  </a>
+                </li>
+                <li>
+                  <a href="/it/hrs/request"
+                    ><i class="fa fa-bullhorn"></i>HR Requests
+                  </a>
+                </li>
+                <li>
+                  <a href="/planning/confirm/requests"
+                    ><i class="fa fa-check-square-o"></i>Confirm Requests (Planning)
+                  </a>
+                </li>
+                <li>
+                  <a href="/recruiter/add/request"
+                    ><i class="fa fa-plus-circle"></i>Add Request (Recruiter)
+                  </a>
+                </li>
+              </ul>
+            </li>            
             <li>
               <a href="/it/change_password"
-                ><i class="fa fa-key" aria-hidden="true"></i>Change
-                Password</a
+                ><i class="fa fa-key" aria-hidden="true"></i>Change Password</a
               >
             </li>
             <li>
@@ -176,9 +204,9 @@
         <div id="page-inner">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="page-head-line">Edit Computer</h1>
+              <h1 class="page-head-line">Edit Other</h1>
               <h1 class="page-subhead-line">
-                Here you can edit the computer details.
+                Here you can edit the other inventory.
               </h1>
             </div>
           </div>
@@ -202,36 +230,36 @@
               <div class="center-form">
                   <form
                   class="form"
-                  action="/it/computers/edit/{{computer.serial_nr}}"
+                  action="/it/others/edit/{{other.other_id}}"
                   method="post"
                   >
-                  {% with messages = get_flashed_messages(category_filter=["model"])
+                  {% with messages = get_flashed_messages(category_filter=["other_edit"])
                     %} {% if messages %} {% for message in messages %}
                     <p class="text-danger text-center">{{ message }}</p>
                     {% endfor %} {% endif %} {% endwith %}
                   <span class="input-span">
-                    <label for="serial_nr" class="label">Serial Number</label>
-                    <input type="text" name="serial_nr" id="serial_nr" value="{{computer.serial_nr}}" readonly
+                    <label for="other_id" class="label">Other ID</label>
+                    <input type="text" name="other_id" id="other_id" value="{{other.other_id}}" readonly
                   /></span>
                   <span class="input-span">
-                    <label for="model" class="label">Model</label>
-                    <input type="text" name="model" id="model" value="{{computer.model}}"
+                    <label for="mouse" class="label">Mouse</label>
+                    <input type="text" name="mouse" id="mouse" value="{{other.mouse}}"
                   /></span>
                   <span class="input-span">
-                    <label for="cpu" class="label">CPU Model</label>
-                    <input type="text" name="cpu" id="cpu" value="{{computer.cpu}}"
+                    <label for="keyboard" class="label">Keyboard</label>
+                    <input type="text" name="keyboard" id="keyboard" value="{{other.keyboard}}"
+                  /></span>
+                  <span class="input-span">
+                    <label for="dp_vga" class="label">DP or VGA</label>
+                    <input type="text" name="dp_vga" id="dp_vga" value="{{other.dp_vga}}"
+                  /></span>
+                  <span class="input-span">
+                    <label for="ac" class="label">AC Adapter</label>
+                    <input type="text" name="ac" id="ac" value="{{other.ac}}"
                   /></span>
                   <span class="input-span"></span>
-                    <label for="ram" class="label">RAM Size</label>
-                    <input type="text" name="ram" id="ram" value="{{computer.ram}}"
-                  /></span>
-                  <span class="input-span"></span>
-                    <label for="storage_type" class="label">Storage Type</label>
-                    <input type="text" name="storage_type" id="storage_type" value="{{computer.storage_type}}"
-                  /></span>
-                  <span class="input-span"></span>
-                    <label for="storage_value" class="label">Storage Value</label>
-                    <input type="text" name="storage_value" id="storage_value" value="{{computer.storage_value}}"
+                    <label for="lan" class="label">Lan</label>
+                    <input type="text" name="lan" id="lan" value="{{other.lan}}"
                   /></span>
                   <br>
                   <input class="submit" type="submit" value="Edit" />

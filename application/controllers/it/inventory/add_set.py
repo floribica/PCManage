@@ -86,11 +86,14 @@ def inventory_pc_add_set():
 def inventory_pc_search_set():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
-    split_name = session['user']["username"].split(".")
-    full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+    else:
+        split_name = session['user']["username"].split(".")
+        full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
 
     if request.method == "POST":
@@ -129,6 +132,16 @@ def inventory_pc_search_set():
                 headset = load_config_yaml(yaml_file)
         
         hrs =Hrs.get_all_approved_request()
+        
+        if session["user"]["role"] == "admin":
+            return render_template(
+                "admin/inventory/add_set.html",
+                hrs = hrs,
+                computer = computer,
+                monitor = monitor,
+                headset = headset,
+                full_name=full_name
+            )
         return render_template(
             "it/inventory/add_set.html",
             hrs = hrs,
@@ -139,6 +152,11 @@ def inventory_pc_search_set():
             total_reuest=total_reuest
         )
 
+    if session["user"]["role"] == "admin":
+        return render_template(
+            "admin/inventory/search_set.html",
+            full_name=full_name
+        )
     return render_template(
         "it/inventory/search_set.html",
         full_name=full_name,

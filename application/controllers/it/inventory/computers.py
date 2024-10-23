@@ -9,10 +9,19 @@ from application.models.hrs import Hrs
 def inventory_pc():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     computers = Computer.get_all_computers()
+    
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        return render_template(
+            "admin/inventory/computers.html",
+            computers = computers,
+            full_name=full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
@@ -29,7 +38,7 @@ def inventory_pc():
 def inventory_pc_edit(serial_nr):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
 
     if request.method == "POST":
@@ -48,11 +57,21 @@ def inventory_pc_edit(serial_nr):
         return redirect("/it/computers")
     
     computer = Computer.get_computer_by_serial_nr({"serial_nr": serial_nr})
+    if not computer:
+        return redirect("/it/computers")
+    
+    if session["user"]["role"] == "admin":
+        full_name = session["user"]["username"].capitalize()
+        return render_template(
+            "admin/inventory/edit/computer.html",
+            computer = computer,
+            full_name=full_name
+        )
+    
     split_name = session['user']["username"].split(".")
     full_name = split_name[0].capitalize() + " " + split_name[1].capitalize()
     total_reuest = Hrs.total_request()
-    if not computer:
-        return redirect("/it/computers")
+    
     return render_template(
         "it/inventory/edit/computer.html",
         computer = computer,
@@ -65,7 +84,7 @@ def inventory_pc_edit(serial_nr):
 def inventory_pc_delete(serial_nr):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     if request.method == "DELETE":

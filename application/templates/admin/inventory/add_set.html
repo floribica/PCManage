@@ -65,9 +65,6 @@
         </div>
 
         <div class="header-right">
-          <a href="/it/hrs/request" class="btn btn-info" title="New Message"
-            ><b>{{ total_reuest.total_request}} </b><i class="fa fa-envelope-o fa-2x"></i
-          ></a>
           <a href="/logout" class="btn btn-danger" title="Logout"
             ><i class="fa fa-exclamation-circle fa-2x"></i
           ></a>
@@ -80,7 +77,7 @@
             <li>
               <div class="user-img-div">
                 <img
-                  src="../../../static/assets/img/user.png"
+                  src="../../static/assets/img/user.png"
                   class="img-thumbnail"
                 />
 
@@ -90,15 +87,29 @@
                 </div>
               </div>
             </li>
-
             <li>
               <a href="/"><i class="fa fa-dashboard"></i>Dashboard</a>
             </li>
             <li>
-              <a href="/users"><i class="fa fa-user"></i>Users</a>
+              <a href="#"
+                ><i class="fa fa-plus-circle"></i>Users
+                <span class="fa arrow"></span
+              ></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="/admin/register"
+                    ><i class="fa fa-plus-circle"></i>Add New User</a
+                  >
+                </li>
+                <li>
+                  <a href="/users"
+                    ><i class="fa fa-unlock-alt"></i>Manage User</a
+                  >
+                </li>
+              </ul>
             </li>
             <li>
-              <a href="/procesverbal"
+              <a href="/receptionist/procesverbal"
                 ><i class="fa fa-file-pdf-o"></i>ProcesVerbal</a
               >
             </li>
@@ -152,14 +163,33 @@
               </ul>
             </li>
             <li>
-              <a href="/it/hrs/trace"
-                ><i class="fa fa-list-ol"></i>Trace Requests
-              </a>
-            </li>
-            <li>
-              <a href="/it/hrs/request"
-                ><i class="fa fa-bullhorn"></i>HR Requests
-              </a>
+              <a href="#"
+                ><i class="fa fa-folder"></i>Requests
+                <span class="fa arrow"></span
+              ></a>
+              <ul class="nav nav-second-level">
+                <li>
+                  <a href="/it/hrs/trace"
+                    ><i class="fa fa-list-ol"></i>Trace Requests
+                  </a>
+                </li>
+                <li>
+                  <a href="/it/hrs/request"
+                    ><i class="fa fa-bullhorn"></i>HR Requests
+                  </a>
+                </li>
+                <li>
+                  <a href="/planning/confirm/requests"
+                    ><i class="fa fa-check-square-o"></i>Confirm Requests
+                    (Planning)
+                  </a>
+                </li>
+                <li>
+                  <a href="/recruiter/add/request"
+                    ><i class="fa fa-plus-circle"></i>Add Request (Recruiter)
+                  </a>
+                </li>
+              </ul>
             </li>
             <li>
               <a href="/it/change_password"
@@ -392,9 +422,10 @@
           </div>
 
           <br />
-          <div 
-            class="text-center" 
-            style="display: flex; justify-content:center">
+          <div
+            class="text-center"
+            style="display: flex; justify-content: center"
+          >
             <button class="animated-button" type="submit">
               <svg
                 viewBox="0 0 24 24"
