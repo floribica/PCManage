@@ -58,7 +58,7 @@ def it_reset_password(user_id):
     User.update_password(reset_data)
     
     try:
-        message = password_email(reset_data["email"], password)
+        message = password_email(reset_data["username"], password)
         send_email(reset_data["email"],"Password Reset", message)
     except:
         flash("Failed to send email.", "reset")
