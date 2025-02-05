@@ -3,6 +3,7 @@ from flask import flash, redirect, render_template, request, session
 from application import app
 from application.models.del_headset import Del_Headset
 from application.models.hrs import Hrs
+from application.helpers.cuffie_excel_read import upload_cuffie_excel
 
 
 
@@ -41,3 +42,23 @@ def add_del_headset():
         full_name=full_name,
         total_reuest=total_reuest
     )
+
+
+@app.route("/admin/del/add/excel", methods=["POST"])
+def upload_excel():
+    if "user" not in session:
+        return redirect("/login")
+    if not session["user"]["role"] in ["it", "admin"]:
+        return redirect("/login")
+    
+    if request.method == "POST":
+        file = request.files["file"]
+        #remove spaces
+        file.filename = file.filename.replace(" ", "_")
+        if not file.filename.endswith(".xlsx"):
+            flash("Invalid file format","del_add")
+            return redirect("/it/del/add/headsets")
+        upload_cuffie_excel(file)
+        return redirect("/it/del/add/headsets")
+    
+    return redirect("/it/del/add/headsets")

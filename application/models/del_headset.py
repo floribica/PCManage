@@ -61,6 +61,24 @@ class Del_Headset:
         return connectToMySQL(cls.db_name).query_db(query, data)
     
     
+    @classmethod
+    def upload_del_headset(cls, data):
+        query = """
+            INSERT INTO del_headsets (
+                headset_sn,
+                operator,
+                statusi,
+                user_id
+            ) VALUES (
+                %(headset_sn)s,
+                %(operator)s,
+                %(statusi)s,
+                %(user_id)s
+            );
+        """
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    
     @staticmethod
     def validate_headset(data):
         is_valid = True
