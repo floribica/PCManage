@@ -40,7 +40,7 @@ def inventory_pc_add_set():
         "adapter_model": request.form["adapter_model"],
         "adapter_sn": request.form["adapter_sn"],
         "headset_model": request.form["headset_model"],
-        "headset_sn": request.form["headset_sn"]
+        "serial_number": request.form["serial_number"]
     }
     
     other_data = {
@@ -100,7 +100,7 @@ def inventory_pc_search_set():
         search_data = {
             "serial_nr": request.form["computer_sn"],
             "monitor_sn": request.form["monitor_sn"],
-            "headset_sn": request.form["headset_sn"],
+            "serial_number": request.form["serial_number"],
             "adapter_sn": request.form["adapter_sn"],
         }
         #search for computer
@@ -122,7 +122,7 @@ def inventory_pc_search_set():
                 yaml_file = "application/helpers/defaul_data/monitor.yaml"
                 monitor = load_config_yaml(yaml_file)
         #search for headset or adapter
-        if not search_data["headset_sn"] and not search_data["adapter_sn"]:
+        if not search_data["serial_number"] and not search_data["adapter_sn"]:
             flash("Headset or adapter serial number is required.", "search_set")
             return redirect("/it/search/set")
         else:

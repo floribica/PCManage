@@ -16,7 +16,7 @@ def add_del_headset():
     
     if request.method == "POST":
         headser_data = {
-            "headset_sn": request.form["headset_sn"],
+            "serial_number": request.form["serial_number"],
             "operator": request.form["operator"],
             "user_id": session["user"]["user_id"]
         }

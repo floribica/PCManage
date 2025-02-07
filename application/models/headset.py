@@ -14,16 +14,16 @@ class Headset:
         self.adapter_model = data['adapter_model']
         self.adapter_sn = data['adapter_sn']
         self.headset_model = data['headset_model']
-        self.headset_sn = data['headset_sn']
+        self.serial_number = data['serial_number']
     
     
     @classmethod
     def add_headset(cls, data):
         query = """
             INSERT INTO headsets
-                (adapter_model, adapter_sn, headset_model, headset_sn)
+                (adapter_model, adapter_sn, headset_model, serial_number)
             VALUES
-                (%(adapter_model)s, %(adapter_sn)s, %(headset_model)s, %(headset_sn)s);
+                (%(adapter_model)s, %(adapter_sn)s, %(headset_model)s, %(serial_number)s);
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
     
@@ -50,7 +50,7 @@ class Headset:
                 *
             FROM headsets
             WHERE adapter_sn = %(adapter_sn)s
-            OR headset_sn = %(headset_sn)s;
+            OR serial_number = %(serial_number)s;
         """
         result = connectToMySQL(cls.db_name).query_db(query, data)
         if result:
@@ -80,7 +80,7 @@ class Headset:
                 adapter_model = %(adapter_model)s,
                 adapter_sn = %(adapter_sn)s,
                 headset_model = %(headset_model)s,
-                headset_sn = %(headset_sn)s
+                serial_number = %(serial_number)s
             WHERE headset_id = %(headset_id)s;
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
@@ -122,7 +122,7 @@ class Headset:
         if len(data['headset_model']) < 1:
             is_valid = False
             flash("Headset model is required.", "headset_edit")
-        if len(data['headset_sn']) < 1:
+        if len(data['serial_number']) < 1:
             is_valid = False
             flash("Headset serial number is required.", "headset_edit")
         return is_valid

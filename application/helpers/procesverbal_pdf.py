@@ -31,7 +31,7 @@ class PDFGenerator:
             adapter_model=data.get('adapter_model', '__________').upper(),
             adapter_sn=data.get('adapter_sn', '__________').upper(),
             headset_model=data.get('headset_model', '__________').upper(),
-            headset_sn=data.get('headset_sn', '__________').upper(),
+            serial_number=data.get('serial_number', '__________').upper(),
             mouse=data.get('mouse', 'No').upper(),
             keyboard=data.get('keyboard', 'No').upper(),
             dp_vga=data.get('dp_vga', '__________').upper(),

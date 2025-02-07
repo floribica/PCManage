@@ -216,7 +216,7 @@
                       <tbody>
                         {% for headset in headsets %}
                         <tr class="odd gradeX">
-                          <td class="">{{headset.headset_sn}}</td>
+                          <td class="">{{headset.serial_number}}</td>
                           <td>{{headset.operator}}</td>
                           <td>{{headset.it_name}}</td>
                           <td class="center">
@@ -229,7 +229,7 @@
                           <td style="display: flex; justify-content: center;">
                             {% if headset.statusi == 0 %}
                             <a
-                              href="/it/del_headsets/return/{{headset.headset_sn}}"
+                              href="/it/del_headsets/return/{{headset.serial_number}}"
                               class="btn btn-success"
                               ><i class="fa fa-check" aria-hidden="true"></i
                             ></a>

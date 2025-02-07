@@ -10,11 +10,11 @@ class Del_Headset:
     db_name = DB_NAME
 
     def __init__(self, data):
-        self.headset_sn = data['headset_sn']
+        self.serial_number = data['serial_number']
         self.operator = data['operator']
         self.statusi = data['statusi']
         self.user_id = data['user_id']
-        self.headset_sn = data['headset_sn']
+        self.serial_number = data['serial_number']
     
     
     @classmethod
@@ -40,7 +40,7 @@ class Del_Headset:
             UPDATE del_headsets
             SET
                 statusi = 1
-            WHERE headset_sn = %(headset_sn)s;
+            WHERE serial_number = %(serial_number)s;
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
     
@@ -49,11 +49,11 @@ class Del_Headset:
     def add_del_headset(cls, data):
         query = """
             INSERT INTO del_headsets (
-                headset_sn,
+                serial_number,
                 operator,
                 user_id
             ) VALUES (
-                %(headset_sn)s,
+                %(serial_number)s,
                 %(operator)s,
                 %(user_id)s
             );
@@ -65,12 +65,12 @@ class Del_Headset:
     def upload_del_headset(cls, data):
         query = """
             INSERT INTO del_headsets (
-                headset_sn,
+                serial_number,
                 operator,
                 statusi,
                 user_id
             ) VALUES (
-                %(headset_sn)s,
+                %(serial_number)s,
                 %(operator)s,
                 %(statusi)s,
                 %(user_id)s
@@ -82,7 +82,7 @@ class Del_Headset:
     @staticmethod
     def validate_headset(data):
         is_valid = True
-        if len(data['headset_sn']) < 1:
+        if len(data['serial_number']) < 1:
             flash("Headset SN is required", "del_add")
             is_valid = False
         if len(data['operator']) < 1:

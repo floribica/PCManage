@@ -19,7 +19,7 @@ def upload_cuffie_excel(file):
         else:
             statusi=0
         data = {
-            "headset_sn": value[3],
+            "serial_number": value[3],
             "operator": value[1] + " " + value[2],
             "statusi": statusi,
             "user_id": 1

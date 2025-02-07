@@ -4,6 +4,6 @@ description: Headset
 adapter_model: "--"
 adapter_sn: "--"
 headset_model: "--"
-headset_sn: "--"
+serial_number: "--"
 
 version: 1.0.0

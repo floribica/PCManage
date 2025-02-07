@@ -35,11 +35,11 @@ def del_headset():
     )
     
 
-@app.route("/it/del_headsets/return/<string:headset_sn>")
-def return_headset(headset_sn):
+@app.route("/it/del_headsets/return/<string:serial_number>")
+def return_headset(serial_number):
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
-    Del_Headset.headset_returnd({"headset_sn": headset_sn})
+    Del_Headset.headset_returnd({"serial_number": serial_number})
     return redirect("/it/del/headsets")

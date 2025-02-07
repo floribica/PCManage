@@ -47,7 +47,7 @@ def inventory_headset_edit(headset_id):
             "adapter_model": request.form["adapter_model"],
             "adapter_sn": request.form["adapter_sn"],
             "headset_model": request.form["headset_model"],
-            "headset_sn": request.form["headset_sn"]
+            "serial_number": request.form["serial_number"]
         }
         if not Headset.validate_headset(headset_data):
             return redirect(f"/it/headsets/edit/{headset_id}")
