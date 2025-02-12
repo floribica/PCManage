@@ -14,7 +14,7 @@ from application.models.pc_action import PC_Action
 def inventory_pc_add_set():
     if "user" not in session:
         return redirect("/login")
-    if not session["user"]["role"] == "it":
+    if not session["user"]["role"] in ["it", "admin"]:
         return redirect("/login")
     
     pc_action_data = {
